@@ -19,7 +19,7 @@
             homeConfigurations = {
                 jack = home-manager.lib.homeManagerConfiguration {
                         inherit pkgs;
-                        modules = [ ./.config/home-manager/home.nix ];
+                        modules = [ ./home.nix ];
                 };
             };
         };

@@ -2,7 +2,7 @@
     description = "Home manager configuration";
 
     inputs = {
-        nixpkgs.url = "nixpkgs-24.05";
+        nixpkgs.url = "nixpkgs/24.05";
 
         home-manager = {
             url = "github:nix-community/home-manager/release-24.05";

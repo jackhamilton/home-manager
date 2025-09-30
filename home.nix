@@ -1,6 +1,8 @@
 { config, pkgs, lib, username, homeDirectory, ... }:
 
-{
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
+in {
   home.username      = username;
   home.homeDirectory = homeDirectory;
   home.stateVersion  = "24.05";

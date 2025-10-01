@@ -85,4 +85,18 @@
     ++ (with pkgs-unstable; [
         godot
     ]);
+
+    xdg.enable = true;
+    xdg.desktopEntries = {
+        vesktop = {
+            name = "Vesktop";
+            exec = "${pkgs.vesktop}/bin/vesktop %U";
+            terminal = false;
+            settings = {
+                StartupNotify = "true";
+                StartupWMClass = "Vesktop";
+                Type = "Application";
+            };
+        };
+    };
 }

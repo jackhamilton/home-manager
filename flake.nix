@@ -13,7 +13,7 @@
   outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, ... }:
   let
     # small helper to build a Home Manager config for a given system/identity
-    mkHome = { system, username, homeDirectory, modules ? [ ] }:
+    mkHome = { system, username, homeDirectory, extra-modules ? [ ] }:
       let pkgs-unstable = nixpkgs-unstable.legacyPackages.${system}; in
       home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { inherit system; };
@@ -22,7 +22,7 @@
             ./home.nix
             ./repos.nix
             ./fonts.nix
-        ] ++ modules;
+        ] ++ extra-modules;
 
         extraSpecialArgs = {
           inherit username homeDirectory pkgs-unstable;
@@ -47,7 +47,7 @@
         system        = "x86_64-linux";
         username      = "jack";
         homeDirectory = "/home/jack";
-        modules = [
+        extra-modules = [
             ./arch.nix
             ./ide.nix
         ];

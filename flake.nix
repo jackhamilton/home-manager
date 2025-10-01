@@ -47,6 +47,10 @@
         system        = "x86_64-linux";
         username      = "jack";
         homeDirectory = "/home/jack";
+        modules = [
+            ./arch.nix
+            ./ide.nix
+        ];
       };
     };
   };

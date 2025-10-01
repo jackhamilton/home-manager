@@ -21,6 +21,7 @@
         modules = [
             ./home.nix
             ./repos.nix
+            ./fonts.nix
         ] ++ modules;
 
         extraSpecialArgs = {

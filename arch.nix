@@ -82,7 +82,7 @@
         yt-dlp
         ytarchive
     ])
-    ++ (with pkgs-unstable) [
+    ++ (with pkgs-unstable; [
         godot
-    ];
+    ]);
 }

@@ -2,17 +2,19 @@
   description = "Home Manager configs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, ... }:
   let
     # small helper to build a Home Manager config for a given system/identity
     mkHome = { system, username, homeDirectory, modules ? [ ] }:
+      let pkgs-unstable = nixpkgs-unstable.legacyPackages.${system}; in
       home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { inherit system; };
         # your base module(s) + host-specific tweaks
@@ -22,7 +24,7 @@
         ] ++ modules;
 
         extraSpecialArgs = {
-          inherit username homeDirectory;
+          inherit username homeDirectory pkgs-unstable;
         };
       };
   in {

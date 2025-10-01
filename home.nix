@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, homeDirectory, ... }:
+{ config, pkgs, lib, username, homeDirectory, pkgs-unstable, ... }:
 
 let isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
 in {
@@ -7,7 +7,7 @@ in {
   home.stateVersion = "24.05";
 
   home.packages = with pkgs;
-    [
+    (with pkgs; [
       lsd
       bat
       curlie
@@ -34,12 +34,15 @@ in {
       xcp
       go
       lazygit
-      neovim
       htop
       tmux
-      nixfmt
+      nixfmt-rfc-style
     ] ++ lib.optionals isDarwin [ xcbeautify ]
-    ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ];
+    ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ])
+    ++ (with pkgs-unstable; [
+        mergiraf
+        neovim
+    ]);
 
   programs.git = {
     enable = true;

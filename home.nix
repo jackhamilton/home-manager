@@ -2,72 +2,73 @@
 
 let isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
 in {
-  home.username = username;
-  home.homeDirectory = homeDirectory;
-  home.stateVersion = "24.05";
+    home.username = username;
+    home.homeDirectory = homeDirectory;
+    home.stateVersion = "24.05";
 
-  home.packages = with pkgs;
-    (with pkgs; [
-      lsd
-      bat
-      curlie
-      zoxide
-      bitwarden-cli
-      chezmoi
-      cloc
-      fzf
-      difftastic
-      cowsay
-      fd
-      github-cli
-      imagemagick
-      pipx
-      ripgrep
-      sccache
-      wget
-      sesh
-      grex
-      hyperfine
-      pastel
-      sd
-      watchexec
-      xcp
-      go
-      lazygit
-      htop
-      tmux
-      nixfmt-rfc-style
-    ] ++ lib.optionals isDarwin [ xcbeautify ]
-    ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ])
-    ++ (with pkgs-unstable; [
-        mergiraf
-        neovim
-    ]);
+    home.packages = with pkgs;
+        (with pkgs; [
+            lsd
+            bat
+            curlie
+            zoxide
+            bitwarden-cli
+            chezmoi
+            cloc
+            fzf
+            difftastic
+            cowsay
+            fd
+            github-cli
+            imagemagick
+            pipx
+            ripgrep
+            sccache
+            wget
+            sesh
+            grex
+            hyperfine
+            pastel
+            sd
+            watchexec
+            xcp
+            go
+            lazygit
+            htop
+            tmux
+            nixfmt-rfc-style
+        ]
+            ++ lib.optionals isDarwin [ xcbeautify ]
+            ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ])
+        ++ (with pkgs-unstable; [
+            mergiraf
+            neovim
+        ]);
 
-  programs.git = {
-    enable = true;
-    userName = "jackhamilton";
-    userEmail = "jackham800@gmail.com";
-    extraConfig = ''
+    programs.git = {
+        enable = true;
+        userName = "jackhamilton";
+        userEmail = "jackham800@gmail.com";
+        extraConfig = ''
       [core]
           attributesFile = ${config.home.homeDirectory}/.config/git/attributes
 
       [merge "mergiraf"]
           name = mergiraf
           driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
-    '';
-  };
+        '';
+    };
 
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-  };
+    programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+    };
 
-  programs.starship.enable = true;
-  programs.home-manager.enable = true;
+    programs.starship.enable = true;
+    programs.home-manager.enable = true;
 
-  home.file.".config/git/attributes".text = ''
+    home.file.".config/git/attributes".text = ''
     *.java merge=mergiraf
     *.properties merge=mergiraf
     *.kt merge=mergiraf
@@ -137,10 +138,10 @@ in {
     *.cmake merge=mergiraf
     *.swift merge=mergiraf
     CMakeLists.txt merge=mergiraf
-  '';
+    '';
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    ISNIXSHELL = "yes";
-  };
+    home.sessionVariables = {
+        EDITOR = "nvim";
+        ISNIXSHELL = "yes";
+    };
 }

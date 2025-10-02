@@ -14,7 +14,6 @@ in {
             bat
             curlie
             zoxide
-            bitwarden-cli
             chezmoi
             cloc
             fzf
@@ -40,7 +39,7 @@ in {
             tmux
             nixfmt-rfc-style
             rbenv
-	    neofetch
+	        neofetch
         ]
             ++ lib.optionals isDarwin [ xcbeautify ]
             ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ])

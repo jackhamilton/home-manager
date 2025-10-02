@@ -7,6 +7,8 @@
         autotiling
         bazelisk
         bitwarden-menu
+        bitwarden-cli
+        chezmoi
         cifs-utils
         samba4Full
         clipman

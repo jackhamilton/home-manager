@@ -14,7 +14,6 @@ in {
             bat
             curlie
             zoxide
-            chezmoi
             cloc
             fzf
             difftastic

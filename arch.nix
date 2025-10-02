@@ -58,6 +58,7 @@
         paru
         pavucontrol
         pipewire
+        wireplumber
         protonvpn-gui
         protonvpn-cli
         qmk
@@ -81,6 +82,15 @@
         wofi
         yt-dlp
         ytarchive
+        xdg-desktop-portal
+        xdg-desktop-portal-wlr
+        hyprland
+        hyprsunset
+        xdg-desktop-portal-hyprland
+        hyprpolkitagent
+        qt5-wayland
+        qt6-wayland
+        xwaylandvideobridge
     ])
     ++ (with pkgs-unstable; [
         godot

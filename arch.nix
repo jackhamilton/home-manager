@@ -67,7 +67,6 @@
         ripcord
         rofi
         rofi
-        rpi-imager
         ruby
         slurp
         steam
@@ -100,8 +99,10 @@
     xdg.desktopEntries = {
         vesktop = {
             name = "Vesktop";
+            genericName = "Discord client";
             exec = "${pkgs.vesktop}/bin/vesktop %U";
             terminal = false;
+            categories = [ "Application" ];
             settings = {
                 StartupNotify = "true";
                 StartupWMClass = "Vesktop";

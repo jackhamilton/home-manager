@@ -8,16 +8,16 @@ rustc = pkgs.rust-bin.beta.latest.default;
 };
 themester = rustPlatform.buildRustPackage rec {
     pname = "themester";
-    version = "0.3.0";
+    version = "0.3.1";
 
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton";
       repo = "themester.zsh";
-      rev = "29019c5b5727d33d808198cae56b054888cac6ab";
-      hash = "sha256-1WWn0psbr2FSYGUGElUpf9d28QwdfsTCY4z5nl7inB0=";
+      rev = "7d0a31b434c9b6bdea9df330a1f117cfb2968ff3";
+      hash = "sha256-dzC7Q9j6eZpaj1+ZPoQ+NzO3eCsM6JxMAup3gKqIQ+I=";
     };
 
-    cargoHash = "sha256-r3+0h9k+Nlq2XFEZLveo3cia+WylTw1ecTszvxeTxQI=";
+    cargoHash = "sha256-aY5Zsq2cF48+DoLJog1L5Yu0SXlA+XvvRwtVVUhWeH8=";
   };
 in {
     home.packages = [

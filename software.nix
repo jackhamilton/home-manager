@@ -17,6 +17,9 @@
         libreoffice
         vesktop
         ripcord
+        handbrake
+        krita
+        inkscape
     ])
     ++ (with pkgs-unstable; [
         godot

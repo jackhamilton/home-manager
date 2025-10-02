@@ -51,6 +51,7 @@
             ./software.nix
             ./repos.nix
             ./ide.nix
+            ./services.nix
             # ./drivers.nix
         ];
       };

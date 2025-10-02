@@ -39,6 +39,7 @@ in {
      nixfmt-rfc-style
 	 neofetch
 	 starship
+	 watchexec
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable

@@ -5,14 +5,18 @@
         Unit = {
             Description = "Update nix-channel";
         };
+        Timer = {
+            OnCalendar = "Daily";
+            Persistent = "true";
+        };
         Install = {
-            WantedBy = [ "default.target" ];
+            WantedBy = [ "timers.target" ];
         };
         Service = {
             ExecStart = "${pkgs.writeShellScript "channel-update" ''
-            #!/run/current-system/sw/bin/bash
-            nix-channel --update
-            ''}";
+#!/run/current-system/sw/bin/bash
+                nix-channel --update
+                ''}";
         };
     };
 }

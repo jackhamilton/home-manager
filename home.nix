@@ -38,28 +38,21 @@ in {
      tmux
      nixfmt-rfc-style
 	 neofetch
+	 starship
      ]
      ++ (with pkgs-unstable; [
-             # MARK: Unstable
+# MARK: Unstable
              mergiraf
              neovim
      ])
      ++ lib.optionals isDarwin [
-     # MARK: Macos only
+# MARK: Macos only
      xcbeautify
      ]
      ++ lib.optionals (!isDarwin) [
-     # MARK: Linux only
+# MARK: Linux only
      wezterm
      ]);
-
-
-    services.cron = {
-        enable = true;
-        systemCronJobs = [
-            "0 0 * * *      root    nix-channel --update"
-        ];
-    };
 
     programs.git = {
         enable = true;
@@ -83,7 +76,11 @@ in {
         nix-direnv.enable = true;
     };
 
-    programs.starship.enable = true;
+    programs.starship = {
+        enable = true;
+    };
+
+
     programs.home-manager.enable = true;
 
     home.file.".config/git/attributes".text = ''

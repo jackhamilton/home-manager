@@ -39,6 +39,8 @@ in {
             htop
             tmux
             nixfmt-rfc-style
+            rbenv
+	    neofetch
         ]
             ++ lib.optionals isDarwin [ xcbeautify ]
             ++ lib.optionals (!isDarwin) [ wezterm handbrake krita inkscape ])

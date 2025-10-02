@@ -4,21 +4,14 @@
         adw-gtk3
         gradience
         solarc-gtk-theme
-        audacity
         autotiling
         bazelisk
-        thunderbird
         bitwarden-menu
-        calibre
-        obs-studio
         cifs-utils
         samba4Full
         clipman
-        cockatrice
-        davinci-resolve
         dconf-editor
         dhcpcd
-        vesktop
         dmenu
         docker
         dpkg
@@ -30,19 +23,16 @@
         fuzzel
         gamescope
         gammastep
-        chromium
         grub2
         gparted
         grim
         gutenprint
         inetutils
-        kicad
         lutris
         lxappearance
         mako
         mangohud
         mimeo
-        nautilus
         neomutt
         networkmanager
         networkmanagerapplet
@@ -63,24 +53,17 @@
         protonvpn-cli
         qmk
         qemu
-        rbenv
-        ripcord
-        rofi
         rofi
         ruby
         slurp
-        steam
         sway
         swayidle
         swaybg
         swayimg
-        vlc
         waybar
         wezterm
         wlsunset
         wofi
-        yt-dlp
-        ytarchive
         xdg-desktop-portal
         xdg-desktop-portal-wlr
         hyprland
@@ -90,10 +73,8 @@
         qt5-wayland
         qt6-wayland
         xwaylandvideobridge
+        xdg-terminal-exec
     ])
-    ++ (with pkgs-unstable; [
-        godot
-    ]);
 
     xdg.enable = true;
     xdg.desktopEntries = {

@@ -49,7 +49,8 @@
         homeDirectory = "/home/jack";
         extra-modules = [
             ./arch.nix
-            # ./ide.nix
+            ./software.nix
+            ./ide.nix
             # ./drivers.nix
         ];
       };

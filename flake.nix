@@ -20,7 +20,6 @@
         # your base module(s) + host-specific tweaks
         modules = [
             ./home.nix
-            ./repos.nix
             ./fonts.nix
         ] ++ extra-modules;
 
@@ -50,6 +49,7 @@
         extra-modules = [
             ./arch.nix
             ./software.nix
+            ./repos.nix
             ./ide.nix
             # ./drivers.nix
         ];

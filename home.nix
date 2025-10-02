@@ -71,6 +71,12 @@ in {
         };
     };
 
+    programs.lazygit = {
+        settings = {
+            git.paging.externalDiffCommand = "difft --color=always";
+        };
+    };
+
     programs.direnv = {
         enable = true;
         enableZshIntegration = true;

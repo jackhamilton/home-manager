@@ -49,10 +49,6 @@ in {
      ++ lib.optionals isDarwin [
 # MARK: Macos only
      xcbeautify
-     ]
-     ++ lib.optionals (!isDarwin) [
-# MARK: Linux only
-     wezterm
      ]);
 
     programs.git = {

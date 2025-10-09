@@ -60,7 +60,7 @@
             ./arch.nix
             ./software.nix
             ./repos.nix
-            ./ide.nix
+            # ./ide.nix
             ./services.nix
             # ./drivers.nix
         ];

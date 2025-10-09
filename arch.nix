@@ -63,18 +63,17 @@
         swaybg
         swayimg
         waybar
-        wezterm
         wlsunset
         wofi
         xdg-desktop-portal
         xdg-desktop-portal-wlr
-        hyprland
-        hyprsunset
-        xdg-desktop-portal-hyprland
         hyprpolkitagent
-        qt5-wayland
-        qt6-wayland
-        xwaylandvideobridge
+        kdePackages.xwaylandvideobridge
         xdg-terminal-exec
     ])
+    ++ (with pkgs-unstable; [
+        # hyprland
+        # hyprsunset
+        # xdg-desktop-portal-hyprland
+    ]);
 }

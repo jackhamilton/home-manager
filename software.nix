@@ -45,7 +45,7 @@
         obs-studio = {
             name = "OBS";
             genericName = "Streaming client";
-            exec = "${pkgs.obs}/bin/obs %U";
+            exec = "${pkgs.obs-studio}/bin/obs %U";
             terminal = false;
             categories = [ "Application" ];
             settings = {

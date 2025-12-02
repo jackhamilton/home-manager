@@ -40,6 +40,7 @@ in {
 	 neofetch
 	 starship
 	 watchexec
+	 lua51Packages.luarocks
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable

@@ -1,5 +1,7 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
+    targets.genericLinux.enable = true;
+
     home.packages = (with pkgs; [
         adw-gtk3
         gradience

@@ -41,6 +41,7 @@ in {
 	 starship
 	 watchexec
 	 lua51Packages.luarocks
+	 jq
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable

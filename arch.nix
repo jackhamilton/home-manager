@@ -74,6 +74,7 @@
         xdg-terminal-exec
     ])
     ++ (with pkgs-unstable; [
+        mergiraf
         # hyprland
         # hyprsunset
         # xdg-desktop-portal-hyprland

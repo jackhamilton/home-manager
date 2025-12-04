@@ -45,7 +45,6 @@ in {
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable
-             mergiraf
              neovim
      ])
      ++ lib.optionals isDarwin [

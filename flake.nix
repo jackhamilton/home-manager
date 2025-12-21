@@ -71,7 +71,9 @@
         username      = "jack";
         homeDirectory = "/home/jack";
 	extra-modules = [
+	    ./nixos.nix
 	    ./software.nix
+	    ./hyprland.nix
 	];
       };
     };

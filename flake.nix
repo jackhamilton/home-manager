@@ -65,6 +65,15 @@
             # ./drivers.nix
         ];
       };
+      
+      "nixos" = mkHome {
+        system        = "x86_64-linux";
+        username      = "jack";
+        homeDirectory = "/home/jack";
+	extra-modules = [
+	    ./software.nix
+	];
+      };
     };
   };
 }

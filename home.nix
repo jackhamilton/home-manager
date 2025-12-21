@@ -6,6 +6,26 @@ in {
     home.homeDirectory = homeDirectory;
     home.stateVersion = "24.05";
 
+    gtk = {
+        enable = true;
+        iconTheme = {
+            name = "Numix-Circle";
+            package = pkgs.numix-icon-theme-circle;
+        };
+        theme = {
+            name = "Catppuccin-Mocha";
+            package = pkgs.catppuccin-gtk;
+        };
+    };
+
+    qt = {
+        enable = true;
+        style = {
+            name = "Catppuccin-Mocha";
+            package = pkgs.catppuccin-qt5ct;
+        };
+    };
+
     nixpkgs.config.allowUnfree = true;
 
     home.packages = with pkgs;
@@ -42,6 +62,8 @@ in {
 	 watchexec
 	 lua51Packages.luarocks
 	 jq
+	 python3
+     papirus-icon-theme
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable
@@ -77,7 +99,6 @@ in {
     programs.starship = {
         enable = true;
     };
-
 
     programs.home-manager.enable = true;
 

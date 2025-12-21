@@ -1,9 +1,20 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
-    targets.genericLinux.enable = true;
+    services.udiskie = {
+        enable = true;
+        settings = {
+            # workaround for
+            # https://github.com/nix-community/home-manager/issues/632
+            program_options = {
+                # replace with your favorite file manager
+                file_manager = "${pkgs.nautilus}/bin/nautilus";
+            };
+        };
+    };
 
     home.packages = (with pkgs; [
         gradience
+        nautilus
         solarc-gtk-theme
         autotiling
         bazelisk
@@ -61,6 +72,8 @@
         hyprpolkitagent
         kdePackages.xwaylandvideobridge
         xdg-terminal-exec
+        hyprsunset
+        firefox
     ])
     ++ (with pkgs-unstable; [
         mergiraf

@@ -86,6 +86,8 @@
             swaynotificationcenter
             firefox
             udiskie
+            grimblast
+            wl-clipboard
             ])
             ++ (with pkgs-unstable; [
                     mergiraf

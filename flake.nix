@@ -75,6 +75,7 @@
 	extra-modules = [
 	    ./nixos.nix
 	    ./software.nix
+	    ./games.nix
 	    # ./hyprland.nix
 	];
       };

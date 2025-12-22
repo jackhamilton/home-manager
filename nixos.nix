@@ -1,8 +1,5 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
-    "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-    };
     services.udiskie = {
         enable = true;
         automount = true;
@@ -18,6 +15,7 @@
     };
 
     home.packages = (with pkgs; [
+            brightnessctl
             gradience
             nautilus
             solarc-gtk-theme
@@ -57,7 +55,6 @@
             nwg-wrapper
             orca
             pamixer
-            papirus-icon-theme
             paru
             pavucontrol
             pipewire
@@ -83,6 +80,7 @@
             ])
             ++ (with pkgs-unstable; [
                     mergiraf
+                papirus-icon-theme
 # hyprland
 # hyprsunset
 # xdg-desktop-portal-hyprland

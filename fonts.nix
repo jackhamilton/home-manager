@@ -4,6 +4,9 @@ let isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
 in {
 	home.packages = with pkgs; [
 		nerd-fonts.roboto-mono
+		nerd-fonts.arimo
+		nerd-fonts.meslo-lg
+		nerd-fonts.blex-mono
 		dejavu_fonts
 		kochi-substitute
 		ipafont

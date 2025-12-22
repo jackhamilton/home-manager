@@ -41,6 +41,12 @@ in {
 
     nixpkgs.config.allowUnfree = true;
 
+    dconf.settings = {
+        "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
+        };
+    };
+
     home.packages = with pkgs;
     (with pkgs; [
     numix-icon-theme-circle

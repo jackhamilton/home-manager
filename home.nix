@@ -86,10 +86,6 @@ in {
 	 jq
 	 python3
      ]
-     ++ (with pkgs-unstable; [
-# MARK: Unstable
-             neovim
-     ])
      ++ lib.optionals isDarwin [
 # MARK: Macos only
      xcbeautify

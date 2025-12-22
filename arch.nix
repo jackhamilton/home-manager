@@ -75,6 +75,7 @@
     ])
     ++ (with pkgs-unstable; [
         mergiraf
+        neovim
         # hyprland
         # hyprsunset
         # xdg-desktop-portal-hyprland

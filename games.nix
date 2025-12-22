@@ -2,6 +2,7 @@
 {
     home.packages = (with pkgs; [
         runelite
+        lutris
     ])
     ++ (with pkgs-unstable; []);
 }

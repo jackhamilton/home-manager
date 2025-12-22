@@ -1,5 +1,14 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
+    # services.mako = {
+    #     enable = true;
+    #     settings = {
+    #         default-timeout = 5;
+    #         border-radius = 16;
+    #     };
+    # };
+
+    # catppuccin.mako.enable = true;
     services.udiskie = {
         enable = true;
         automount = true;
@@ -42,7 +51,6 @@
             inetutils
             lutris
             lxappearance
-            mako
             mangohud
             mimeo
             neomutt
@@ -75,6 +83,7 @@
             kdePackages.xwaylandvideobridge
             xdg-terminal-exec
             hyprsunset
+            swaynotificationcenter
             firefox
             udiskie
             ])

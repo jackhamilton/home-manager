@@ -12,6 +12,7 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = inputs@{ nixpkgs, nixpkgs-unstable, rust-overlay, home-manager, ... }:
@@ -31,6 +32,7 @@
             ./home.nix
             ./fonts.nix
             ./cargo.nix
+            # catppuccin.homeModules.catppuccin
         ] ++ extra-modules;
 
         extraSpecialArgs = {
@@ -65,7 +67,7 @@
             # ./drivers.nix
         ];
       };
-      
+
       "nixos" = mkHome {
         system        = "x86_64-linux";
         username      = "jack";

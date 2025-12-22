@@ -85,7 +85,6 @@ in {
 	 lua51Packages.luarocks
 	 jq
 	 python3
-     papirus-icon-theme
      ]
      ++ (with pkgs-unstable; [
 # MARK: Unstable

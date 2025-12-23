@@ -76,6 +76,7 @@
 	    ./nixos.nix
 	    ./software.nix
 	    ./games.nix
+	    ./linux.nix
 	    # ./hyprland.nix
 	];
       };

@@ -22,8 +22,6 @@
   };
 
   xdg.systemDirs.data = [
-    "/usr/share"
-    "/usr/local/share"
     "/home/jack/.local/share/flatpak/exports/share/applications"
   ];
 

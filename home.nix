@@ -1,198 +1,217 @@
-{ config, pkgs, lib, username, homeDirectory, pkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  username,
+  homeDirectory,
+  pkgs-unstable,
+  ...
+}:
 
-let isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
-in {
-    home.username = username;
-    home.homeDirectory = homeDirectory;
-    home.stateVersion = "24.05";
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
+in
+{
+  home.username = username;
+  home.homeDirectory = homeDirectory;
+  home.stateVersion = "24.05";
 
-    gtk = {
-        enable = true;
-        iconTheme = {
-            name = "Numix-Circle";
-            package = pkgs.numix-icon-theme-circle;
-        };
-        theme = {
-            name = "Catppuccin-Mocha";
-            package = pkgs.catppuccin-gtk;
-        };
-
-        gtk3.extraConfig = {
-            gtk-application-prefer-dark-theme = true;
-        };
-        gtk4.extraConfig = {
-            gtk-application-prefer-dark-theme = true;
-        };
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Numix-Circle";
+      package = pkgs.numix-icon-theme-circle;
+    };
+    theme = {
+      name = "Catppuccin-Mocha";
+      package = pkgs.catppuccin-gtk;
     };
 
-    xdg.configFile = {
-      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
     };
-
-    qt = {
-        enable = true;
-        style = {
-            name = "Catppuccin-Mocha";
-            package = pkgs.catppuccin-qt5ct;
-        };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
     };
+  };
 
-    nixpkgs.config.allowUnfree = true;
+  xdg.configFile = {
+    "gtk-4.0/assets".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source =
+      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+  };
 
-    dconf.settings = {
-        "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-        };
+  qt = {
+    enable = true;
+    style = {
+      name = "Catppuccin-Mocha";
+      package = pkgs.catppuccin-qt5ct;
     };
+  };
 
-    home.packages = with pkgs;
-    (with pkgs; [
-    numix-icon-theme-circle
-    catppuccin-qt5ct
-    catppuccin-gtk
-     lsd
-     bat
-     curlie
-     zoxide
-     cloc
-     fzf
-     difftastic
-     cowsay
-     fd
-     github-cli
-     imagemagick
-     pipx
-     ripgrep
-     sccache
-     wget
-     sesh
-     grex
-     hyperfine
-     pastel
-     sd
-     watchexec
-     xcp
-     go
-     lazygit
-     htop
-     tmux
-     nixfmt-rfc-style
-	 neofetch
-	 starship
-	 watchexec
-	 lua51Packages.luarocks
-	 jq
-	 python3
-     ]
-     ++ lib.optionals isDarwin [
-# MARK: Macos only
-     xcbeautify
-     ]);
+  nixpkgs.config.allowUnfree = true;
 
-    programs.git = {
-        enable = true;
-        userName = "jackhamilton";
-        userEmail = "jackham800@gmail.com";
-        extraConfig = {
-            merge.mergiraf = {
-                name = "mergiraf";
-                driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
-            };
-            core.attributesfile = "${config.home.homeDirectory}/.config/git/attributes";
-            diff.external = "difft";
-            credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
-            credential."https://gist.github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
-        };
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
     };
+  };
 
-    programs.direnv = {
-        enable = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
+  home.packages =
+    with pkgs;
+    (
+      with pkgs;
+      [
+        numix-icon-theme-circle
+        catppuccin-qt5ct
+        catppuccin-gtk
+        lsd
+        bat
+        curlie
+        zoxide
+        cloc
+        fzf
+        difftastic
+        cowsay
+        fd
+        github-cli
+        imagemagick
+        pipx
+        ripgrep
+        sccache
+        wget
+        sesh
+        grex
+        hyperfine
+        pastel
+        sd
+        watchexec
+        xcp
+        go
+        lazygit
+        htop
+        tmux
+        nixfmt-rfc-style
+        neofetch
+        starship
+        watchexec
+        lua51Packages.luarocks
+        (pkgs.python313.withPackages (ps: [
+          ps.libtmux
+        ]))
+        jq
+      ]
+      ++ lib.optionals isDarwin [
+        # MARK: Macos only
+        xcbeautify
+      ]
+    );
+
+  programs.git = {
+    enable = true;
+    userName = "jackhamilton";
+    userEmail = "jackham800@gmail.com";
+    extraConfig = {
+      merge.mergiraf = {
+        name = "mergiraf";
+        driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+      };
+      core.attributesfile = "${config.home.homeDirectory}/.config/git/attributes";
+      diff.external = "difft";
+      credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
+      credential."https://gist.github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
     };
+  };
 
-    programs.starship = {
-        enable = true;
-    };
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 
-    programs.home-manager.enable = true;
+  programs.starship = {
+    enable = true;
+  };
 
-    home.file.".config/git/attributes".text = ''
-        *.java merge=mergiraf
-        *.properties merge=mergiraf
-        *.kt merge=mergiraf
-        *.rs merge=mergiraf
-        *.go merge=mergiraf
-        go.mod merge=mergiraf
-        go.sum merge=mergiraf
-        *.ini merge=mergiraf
-        *.js merge=mergiraf
-        *.jsx merge=mergiraf
-        *.mjs merge=mergiraf
-        *.json merge=mergiraf
-        *.yml merge=mergiraf
-        *.yaml merge=mergiraf
-        pyproject.toml merge=mergiraf
-        *.toml merge=mergiraf
-        *.html merge=mergiraf
-        *.htm merge=mergiraf
-        *.xhtml merge=mergiraf
-        *.xml merge=mergiraf
-        *.c merge=mergiraf
-        *.h merge=mergiraf
-        *.cc merge=mergiraf
-        *.hh merge=mergiraf
-        *.cpp merge=mergiraf
-        *.hpp merge=mergiraf
-        *.cxx merge=mergiraf
-        *.hxx merge=mergiraf
-        *.c++ merge=mergiraf
-        *.h++ merge=mergiraf
-        *.mpp merge=mergiraf
-        *.cppm merge=mergiraf
-        *.ixx merge=mergiraf
-        *.tcc merge=mergiraf
-        *.cs merge=mergiraf
-        *.dart merge=mergiraf
-        *.dts merge=mergiraf
-        *.scala merge=mergiraf
-        *.sbt merge=mergiraf
-        *.ts merge=mergiraf
-        *.tsx merge=mergiraf
-        *.py merge=mergiraf
-        *.php merge=mergiraf
-        *.phtml merge=mergiraf
-        *.sol merge=mergiraf
-        *.lua merge=mergiraf
-        *.rb merge=mergiraf
-        *.ex merge=mergiraf
-        *.exs merge=mergiraf
-        *.nix merge=mergiraf
-        *.sv merge=mergiraf
-        *.svh merge=mergiraf
-        *.md merge=mergiraf
-        *.hcl merge=mergiraf
-        *.tf merge=mergiraf
-        *.tfvars merge=mergiraf
-        *.ml merge=mergiraf
-        *.mli merge=mergiraf
-        *.hs merge=mergiraf
-        *.mk merge=mergiraf
-        Makefile merge=mergiraf
-        GNUmakefile merge=mergiraf
-        *.bzl merge=mergiraf
-        *.bazel merge=mergiraf
-        BUILD merge=mergiraf
-        WORKSPACE merge=mergiraf
-        *.cmake merge=mergiraf
-        *.swift merge=mergiraf
-        CMakeLists.txt merge=mergiraf
-        '';
+  programs.home-manager.enable = true;
 
-    home.sessionVariables = {
-        EDITOR = "nvim";
-        ISNIXSHELL = "yes";
-    };
+  home.file.".config/git/attributes".text = ''
+    *.java merge=mergiraf
+    *.properties merge=mergiraf
+    *.kt merge=mergiraf
+    *.rs merge=mergiraf
+    *.go merge=mergiraf
+    go.mod merge=mergiraf
+    go.sum merge=mergiraf
+    *.ini merge=mergiraf
+    *.js merge=mergiraf
+    *.jsx merge=mergiraf
+    *.mjs merge=mergiraf
+    *.json merge=mergiraf
+    *.yml merge=mergiraf
+    *.yaml merge=mergiraf
+    pyproject.toml merge=mergiraf
+    *.toml merge=mergiraf
+    *.html merge=mergiraf
+    *.htm merge=mergiraf
+    *.xhtml merge=mergiraf
+    *.xml merge=mergiraf
+    *.c merge=mergiraf
+    *.h merge=mergiraf
+    *.cc merge=mergiraf
+    *.hh merge=mergiraf
+    *.cpp merge=mergiraf
+    *.hpp merge=mergiraf
+    *.cxx merge=mergiraf
+    *.hxx merge=mergiraf
+    *.c++ merge=mergiraf
+    *.h++ merge=mergiraf
+    *.mpp merge=mergiraf
+    *.cppm merge=mergiraf
+    *.ixx merge=mergiraf
+    *.tcc merge=mergiraf
+    *.cs merge=mergiraf
+    *.dart merge=mergiraf
+    *.dts merge=mergiraf
+    *.scala merge=mergiraf
+    *.sbt merge=mergiraf
+    *.ts merge=mergiraf
+    *.tsx merge=mergiraf
+    *.py merge=mergiraf
+    *.php merge=mergiraf
+    *.phtml merge=mergiraf
+    *.sol merge=mergiraf
+    *.lua merge=mergiraf
+    *.rb merge=mergiraf
+    *.ex merge=mergiraf
+    *.exs merge=mergiraf
+    *.nix merge=mergiraf
+    *.sv merge=mergiraf
+    *.svh merge=mergiraf
+    *.md merge=mergiraf
+    *.hcl merge=mergiraf
+    *.tf merge=mergiraf
+    *.tfvars merge=mergiraf
+    *.ml merge=mergiraf
+    *.mli merge=mergiraf
+    *.hs merge=mergiraf
+    *.mk merge=mergiraf
+    Makefile merge=mergiraf
+    GNUmakefile merge=mergiraf
+    *.bzl merge=mergiraf
+    *.bazel merge=mergiraf
+    BUILD merge=mergiraf
+    WORKSPACE merge=mergiraf
+    *.cmake merge=mergiraf
+    *.swift merge=mergiraf
+    CMakeLists.txt merge=mergiraf
+  '';
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    ISNIXSHELL = "yes";
+  };
 }

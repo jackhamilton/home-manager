@@ -1,11 +1,15 @@
-
-{ config, pkgs, pkgs-unstable, lib, ... }:
 {
-    systemd.user.services.hyprland-xdg-autostart = {
-        Unit = {
-            Description = "Autostart XDG autostart apps";
-            BindsTo = "graphical-session.target";
-            Wants = "xdg-desktop-autostart.target";
-        };
+  config,
+  pkgs,
+  pkgs-unstable,
+  lib,
+  ...
+}:
+{
+  systemd.user.targets.hyprland-session = {
+    Unit = {
+      Description = "Hyprland session target";
+      Wants = [ "xdg-desktop-autostart.target" ];
     };
+  };
 }

@@ -15,71 +15,88 @@
     # catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, rust-overlay, home-manager, ... }:
-  let
-    # small helper to build a Home Manager config for a given system/identity
-    mkHome = { system, username, homeDirectory, extra-modules ? [ ] }:
-      let pkgs-unstable = nixpkgs-unstable.legacyPackages.${system}; in
-      home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
+  outputs =
+    inputs@{
+      nixpkgs,
+      nixpkgs-unstable,
+      rust-overlay,
+      home-manager,
+      ...
+    }:
+    let
+      # small helper to build a Home Manager config for a given system/identity
+      mkHome =
+        {
+          system,
+          username,
+          homeDirectory,
+          extra-modules ? [ ],
+        }:
+        let
+          pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+        in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
             inherit system;
             overlays = [
-            rust-overlay.overlays.default
+              rust-overlay.overlays.default
             ];
-        };
-        # your base module(s) + host-specific tweaks
-        modules = [
+          };
+          # your base module(s) + host-specific tweaks
+          modules = [
             ./home.nix
             ./fonts.nix
             ./cargo.nix
             # catppuccin.homeModules.catppuccin
-        ] ++ extra-modules;
+          ]
+          ++ extra-modules;
 
-        extraSpecialArgs = {
-          inherit username homeDirectory pkgs-unstable;
+          extraSpecialArgs = {
+            inherit username homeDirectory pkgs-unstable;
+          };
         };
-      };
-  in {
-    # Name each target explicitly. Pick names you’ll remember at the CLI.
-    homeConfigurations = {
-      "darwin" = mkHome {
-        system        = "aarch64-darwin";
-        username      = "jackhamilton";
-        homeDirectory = "/Users/jackhamilton";
-      };
+    in
+    {
+      # Name each target explicitly. Pick names you’ll remember at the CLI.
+      homeConfigurations = {
+        "darwin" = mkHome {
+          system = "aarch64-darwin";
+          username = "jackhamilton";
+          homeDirectory = "/Users/jackhamilton";
+        };
 
-      "darwin-intel" = mkHome {
-        system        = "x86_64-darwin";
-        username      = "jackhamilton";
-        homeDirectory = "/Users/jackhamilton";
-      };
+        "darwin-intel" = mkHome {
+          system = "x86_64-darwin";
+          username = "jackhamilton";
+          homeDirectory = "/Users/jackhamilton";
+        };
 
-      "arch" = mkHome {
-        system        = "x86_64-linux";
-        username      = "jack";
-        homeDirectory = "/home/jack";
-        extra-modules = [
+        "arch" = mkHome {
+          system = "x86_64-linux";
+          username = "jack";
+          homeDirectory = "/home/jack";
+          extra-modules = [
             ./arch.nix
             ./software.nix
             ./repos.nix
             # ./ide.nix
             ./services.nix
             # ./drivers.nix
-        ];
-      };
+          ];
+        };
 
-      "nixos" = mkHome {
-        system        = "x86_64-linux";
-        username      = "jack";
-        homeDirectory = "/home/jack";
-	extra-modules = [
-	    ./nixos.nix
-	    ./software.nix
-        ./services.nix
-	    ./games.nix
-	    ./linux.nix
-	];
+        "nixos" = mkHome {
+          system = "x86_64-linux";
+          username = "jack";
+          homeDirectory = "/home/jack";
+          extra-modules = [
+            ./nixos.nix
+            ./software.nix
+            ./services.nix
+            ./games.nix
+            ./linux.nix
+          ];
+        };
       };
     };
-  };
 }

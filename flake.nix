@@ -79,9 +79,7 @@
             ./arch.nix
             ./software.nix
             ./repos.nix
-            # ./ide.nix
-            ./services.nix
-            # ./drivers.nix
+            ./systemd.nix
           ];
         };
 
@@ -92,7 +90,7 @@
           extra-modules = [
             ./nixos.nix
             ./software.nix
-            ./services.nix
+            ./systemd.nix
             ./games.nix
             ./linux.nix
           ];

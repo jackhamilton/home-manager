@@ -7,7 +7,8 @@
 }:
 {
   xdg.systemDirs.data = [
-    "/home/jack/.local/share/flatpak/exports/share/applications"
+    "/home/jack/.local/share/flatpak/exports/share"
+    "/var/lib/flatpak/exports/share"
   ];
 
   services.udiskie = {
@@ -54,6 +55,7 @@
       bitwarden-menu
       bitwarden-cli
       chezmoi
+      flatpak
       cifs-utils
       samba4Full
       cliphist

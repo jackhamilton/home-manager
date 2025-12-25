@@ -90,6 +90,7 @@
           extra-modules = [
             ./nixos.nix
             ./software.nix
+            ./services.nix
             ./systemd.nix
             ./games.nix
             ./linux.nix

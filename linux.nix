@@ -10,14 +10,6 @@
     "/home/jack/.local/share/flatpak/exports/share/applications"
   ];
 
-  services.xserver = {
-    enable = true;
-    displayManager.lightdm = {
-      enable = true;
-      greeters.slick.enable = true;
-    };
-  };
-
   services.udiskie = {
     enable = true;
     automount = true;
@@ -113,10 +105,13 @@
       kdePackages.xwaylandvideobridge
       xdg-terminal-exec
       hyprsunset
+      hyprpaper
+      waypaper
       swaynotificationcenter
       udiskie
       grimblast
       wl-clipboard
+      wtype
     ])
     ++ (with pkgs-unstable; [
       mergiraf

@@ -63,12 +63,18 @@
           system = "aarch64-darwin";
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
+          extra-modules = [
+            ./git.nix
+          ];
         };
 
         "darwin-intel" = mkHome {
           system = "x86_64-darwin";
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
+          extra-modules = [
+            ./git.nix
+          ];
         };
 
         "arch" = mkHome {
@@ -80,6 +86,7 @@
             ./software.nix
             ./repos.nix
             ./systemd.nix
+            ./git.nix
           ];
         };
 
@@ -94,6 +101,16 @@
             ./systemd.nix
             ./games.nix
             ./linux.nix
+            ./git.nix
+          ];
+        };
+
+        "server" = mkHome {
+          system = "x86_64-linux";
+          username = "root";
+          homeDirectory = "/root/";
+          extra-modules = [
+            ./git.nix
           ];
         };
       };

@@ -45,6 +45,7 @@
           # your base module(s) + host-specific tweaks
           modules = [
             ./home.nix
+            ./git.nix
           ]
           ++ extra-modules;
 
@@ -61,7 +62,6 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
-            ./git.nix
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
@@ -73,7 +73,6 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
-            ./git.nix
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
@@ -86,10 +85,10 @@
           homeDirectory = "/home/jack";
           extra-modules = [
             ./arch.nix
+            ./linux.nix
             ./software.nix
             ./repos.nix
             ./systemd.nix
-            ./git.nix
             ./theme.nix
             ./expanded-core.nix
             ./fonts.nix
@@ -103,12 +102,11 @@
           homeDirectory = "/home/jack";
           extra-modules = [
             ./nixos.nix
+            ./linux.nix
             ./software.nix
             ./services.nix
             ./systemd.nix
             ./games.nix
-            ./linux.nix
-            ./git.nix
             ./theme.nix
             ./expanded-core.nix
             ./fonts.nix
@@ -120,9 +118,6 @@
           system = "x86_64-linux";
           username = "root";
           homeDirectory = "/root/";
-          extra-modules = [
-            ./git.nix
-          ];
         };
       };
     };

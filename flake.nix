@@ -77,6 +77,7 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
+            ./no-linux.nix
           ];
         };
 

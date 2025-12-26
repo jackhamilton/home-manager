@@ -12,6 +12,8 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix.url = "github:ryantm/agenix";
     # catppuccin.url = "github:catppuccin/nix";
   };
 
@@ -21,6 +23,7 @@
       nixpkgs-unstable,
       rust-overlay,
       home-manager,
+      agenix,
       ...
     }:
     let
@@ -46,6 +49,7 @@
           modules = [
             ./home.nix
             ./git.nix
+            agenix.homeManagerModules.default
           ]
           ++ extra-modules;
 

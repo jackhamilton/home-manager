@@ -16,99 +16,51 @@ in
   home.homeDirectory = homeDirectory;
   home.stateVersion = "24.05";
 
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Numix-Circle";
-      package = pkgs.numix-icon-theme-circle;
-    };
-    theme = {
-      name = "Catppuccin-Mocha";
-      package = pkgs.catppuccin-gtk;
-    };
-
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
-  };
-
-  xdg.configFile = {
-    "gtk-4.0/assets".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-  };
-
-  qt = {
-    enable = true;
-    style = {
-      name = "Catppuccin-Mocha";
-      package = pkgs.catppuccin-qt5ct;
-    };
-  };
-
   nixpkgs.config.allowUnfree = true;
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
 
   home.packages =
     with pkgs;
-    (
-      with pkgs;
-      [
-        numix-icon-theme-circle
-        catppuccin-qt5ct
-        catppuccin-gtk
-        lsd
-        bat
-        curlie
-        zoxide
-        cloc
-        fzf
-        difftastic
-        cowsay
-        fd
-        github-cli
-        imagemagick
-        pipx
-        ripgrep
-        sccache
-        wget
-        sesh
-        grex
-        hyperfine
-        pastel
-        sd
-        watchexec
-        xcp
-        go
-        lazygit
-        htop
-        tmux
-        nixfmt-rfc-style
-        neofetch
-        starship
-        watchexec
-        lua51Packages.luarocks
-        (pkgs.python313.withPackages (ps: [
-          ps.libtmux
-        ]))
-        jq
-      ]
-      ++ lib.optionals isDarwin [
-        # MARK: Macos only
-        xcbeautify
-      ]
-    );
+    [
+      lsd
+      bat
+      curlie
+      zoxide
+      cloc
+      fzf
+      difftastic
+      cowsay
+      fd
+      github-cli
+      imagemagick
+      pipx
+      ripgrep
+      sccache
+      wget
+      sesh
+      grex
+      hyperfine
+      pastel
+      sd
+      watchexec
+      xcp
+      go
+      lazygit
+      htop
+      tmux
+      nixfmt-rfc-style
+      neofetch
+      starship
+      watchexec
+      lua51Packages.luarocks
+      (pkgs.python313.withPackages (ps: [
+        ps.libtmux
+      ]))
+      jq
+    ]
+    ++ lib.optionals isDarwin [
+      # MARK: Macos only
+      xcbeautify
+    ];
 
   programs.direnv = {
     enable = true;
@@ -121,78 +73,6 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  home.file.".config/git/attributes".text = ''
-    *.java merge=mergiraf
-    *.properties merge=mergiraf
-    *.kt merge=mergiraf
-    *.rs merge=mergiraf
-    *.go merge=mergiraf
-    go.mod merge=mergiraf
-    go.sum merge=mergiraf
-    *.ini merge=mergiraf
-    *.js merge=mergiraf
-    *.jsx merge=mergiraf
-    *.mjs merge=mergiraf
-    *.json merge=mergiraf
-    *.yml merge=mergiraf
-    *.yaml merge=mergiraf
-    pyproject.toml merge=mergiraf
-    *.toml merge=mergiraf
-    *.html merge=mergiraf
-    *.htm merge=mergiraf
-    *.xhtml merge=mergiraf
-    *.xml merge=mergiraf
-    *.c merge=mergiraf
-    *.h merge=mergiraf
-    *.cc merge=mergiraf
-    *.hh merge=mergiraf
-    *.cpp merge=mergiraf
-    *.hpp merge=mergiraf
-    *.cxx merge=mergiraf
-    *.hxx merge=mergiraf
-    *.c++ merge=mergiraf
-    *.h++ merge=mergiraf
-    *.mpp merge=mergiraf
-    *.cppm merge=mergiraf
-    *.ixx merge=mergiraf
-    *.tcc merge=mergiraf
-    *.cs merge=mergiraf
-    *.dart merge=mergiraf
-    *.dts merge=mergiraf
-    *.scala merge=mergiraf
-    *.sbt merge=mergiraf
-    *.ts merge=mergiraf
-    *.tsx merge=mergiraf
-    *.py merge=mergiraf
-    *.php merge=mergiraf
-    *.phtml merge=mergiraf
-    *.sol merge=mergiraf
-    *.lua merge=mergiraf
-    *.rb merge=mergiraf
-    *.ex merge=mergiraf
-    *.exs merge=mergiraf
-    *.nix merge=mergiraf
-    *.sv merge=mergiraf
-    *.svh merge=mergiraf
-    *.md merge=mergiraf
-    *.hcl merge=mergiraf
-    *.tf merge=mergiraf
-    *.tfvars merge=mergiraf
-    *.ml merge=mergiraf
-    *.mli merge=mergiraf
-    *.hs merge=mergiraf
-    *.mk merge=mergiraf
-    Makefile merge=mergiraf
-    GNUmakefile merge=mergiraf
-    *.bzl merge=mergiraf
-    *.bazel merge=mergiraf
-    BUILD merge=mergiraf
-    WORKSPACE merge=mergiraf
-    *.cmake merge=mergiraf
-    *.swift merge=mergiraf
-    CMakeLists.txt merge=mergiraf
-  '';
 
   home.sessionVariables = {
     EDITOR = "nvim";

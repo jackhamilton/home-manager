@@ -87,6 +87,7 @@
             ./repos.nix
             ./systemd.nix
             ./git.nix
+            ./theme.nix
           ];
         };
 
@@ -102,6 +103,7 @@
             ./games.nix
             ./linux.nix
             ./git.nix
+            ./theme.nix
           ];
         };
 

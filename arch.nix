@@ -74,7 +74,6 @@
         xdg-terminal-exec
     ])
     ++ (with pkgs-unstable; [
-        mergiraf
         neovim
         # hyprland
         # hyprsunset

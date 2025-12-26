@@ -27,7 +27,6 @@ in
       zoxide
       cloc
       fzf
-      difftastic
       cowsay
       fd
       github-cli

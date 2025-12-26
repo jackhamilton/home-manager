@@ -116,7 +116,6 @@
       wtype
     ])
     ++ (with pkgs-unstable; [
-      mergiraf
       papirus-icon-theme
     ]);
 }

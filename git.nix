@@ -1,5 +1,14 @@
 { config, lib, pkgs, pkgs-unstable, ... }:
 {
+  home.packages =
+    with pkgs;
+    [
+      difftastic
+    ]
+    ++ (with pkgs-unstable; [
+      mergiraf
+    ]);
+
   programs.git = {
     enable = true;
     userName = "jackhamilton";

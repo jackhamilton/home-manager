@@ -54,15 +54,12 @@
       bazelisk
       bitwarden-menu
       bitwarden-cli
-      chezmoi
       flatpak
       cifs-utils
       samba4Full
       cliphist
       playerctl
       dconf-editor
-      dhcpcd
-      dmenu
       dpkg
       dunst
       evince
@@ -87,7 +84,6 @@
       nwg-wrapper
       orca
       pamixer
-      paru
       pavucontrol
       pipewire
       wireplumber

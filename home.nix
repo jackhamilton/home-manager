@@ -41,6 +41,7 @@ in
       neofetch
       starship
       watchexec
+      chezmoi
     ];
 
   programs.direnv = {

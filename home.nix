@@ -30,19 +30,10 @@ in
       cowsay
       fd
       github-cli
-      imagemagick
-      pipx
       ripgrep
-      sccache
       wget
-      sesh
-      grex
-      hyperfine
-      pastel
       sd
-      watchexec
       xcp
-      go
       lazygit
       htop
       tmux
@@ -50,15 +41,6 @@ in
       neofetch
       starship
       watchexec
-      lua51Packages.luarocks
-      (pkgs.python313.withPackages (ps: [
-        ps.libtmux
-      ]))
-      jq
-    ]
-    ++ lib.optionals isDarwin [
-      # MARK: Macos only
-      xcbeautify
     ];
 
   programs.direnv = {

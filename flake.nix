@@ -45,9 +45,6 @@
           # your base module(s) + host-specific tweaks
           modules = [
             ./home.nix
-            ./fonts.nix
-            ./cargo.nix
-            # catppuccin.homeModules.catppuccin
           ]
           ++ extra-modules;
 
@@ -65,6 +62,9 @@
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
             ./git.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
           ];
         };
 
@@ -74,6 +74,9 @@
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
             ./git.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
           ];
         };
 
@@ -88,6 +91,9 @@
             ./systemd.nix
             ./git.nix
             ./theme.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
           ];
         };
 
@@ -104,6 +110,9 @@
             ./linux.nix
             ./git.nix
             ./theme.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
           ];
         };
 

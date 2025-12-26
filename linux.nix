@@ -114,6 +114,7 @@
       grimblast
       wl-clipboard
       wtype
+      go
     ])
     ++ (with pkgs-unstable; [
       papirus-icon-theme

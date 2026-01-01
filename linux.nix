@@ -51,7 +51,6 @@
   home.packages =
     (with pkgs; [
       brightnessctl
-      gradience
       nautilus
       solarc-gtk-theme
       autotiling
@@ -92,7 +91,6 @@
       pipewire
       wireplumber
       protonvpn-gui
-      protonvpn-cli
       qmk
       qemu
       rofi
@@ -104,7 +102,6 @@
       xdg-desktop-portal
       xdg-desktop-portal-wlr
       hyprpolkitagent
-      kdePackages.xwaylandvideobridge
       xdg-terminal-exec
       hyprsunset
       hyprpaper

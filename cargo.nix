@@ -20,7 +20,7 @@ themester = rustPlatform.buildRustPackage rec {
     cargoHash = "sha256-aY5Zsq2cF48+DoLJog1L5Yu0SXlA+XvvRwtVVUhWeH8=";
   };
 in {
-    home.packages = [
-        themester
-    ];
+    # home.packages = [
+    #     themester
+    # ];
 }

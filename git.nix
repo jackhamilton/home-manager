@@ -1,4 +1,10 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 {
   home.packages =
     with pkgs;
@@ -11,9 +17,11 @@
 
   programs.git = {
     enable = true;
-    userName = "jackhamilton";
-    userEmail = "jackham800@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "jackhamilton";
+        email = "jackham800@gmail.com";
+      };
       merge.mergiraf = {
         name = "mergiraf";
         driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";

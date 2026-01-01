@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +25,7 @@
       rust-overlay,
       home-manager,
       agenix,
+      catppuccin,
       ...
     }:
     let
@@ -49,6 +51,7 @@
           modules = [
             ./home.nix
             ./git.nix
+              catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
           ]
           ++ extra-modules;

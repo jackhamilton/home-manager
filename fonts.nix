@@ -64,7 +64,7 @@ in
 
       fcitx5.settings.addons = {
         classicui.globalSection = {
-          Theme = "catppuccin-mocha-maroon";
+          Theme = "catppuccin-mocha-flamingo";
         };
       };
   };

@@ -1,12 +1,17 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
 {
-  home.packages =
-    with pkgs;
-    [
-      numix-icon-theme-circle
-      catppuccin-qt5ct
-      catppuccin-gtk
-    ];
+  config,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  catppuccin,
+  ...
+}:
+{
+  home.packages = with pkgs; [
+    numix-icon-theme-circle
+    # catppuccin-qt5ct
+    # catppuccin-gtk
+  ];
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
@@ -14,17 +19,19 @@
     };
   };
 
+  catppuccin = {
+    enable = true;
+    accent = "flamingo";
+    nvim.enable = false;
+    starship.enable = false;
+  };
+
   gtk = {
     enable = true;
-    iconTheme = {
+    iconTheme = lib.mkForce {
       name = "Numix-Circle";
       package = pkgs.numix-icon-theme-circle;
     };
-    theme = {
-      name = "Catppuccin-Mocha";
-      package = pkgs.catppuccin-gtk;
-    };
-
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
     };
@@ -33,21 +40,10 @@
     };
   };
 
-  xdg.configFile = {
-    "gtk-4.0/assets".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source =
-      "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-  };
-
   qt = {
     enable = true;
-    style = {
-      name = "Catppuccin-Mocha";
-      package = pkgs.catppuccin-qt5ct;
-    };
+    style.name = "kvantum";
+    platformTheme.name = "kvantum";
   };
 
 }

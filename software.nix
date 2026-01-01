@@ -4,7 +4,7 @@
         cockatrice
         chromium
         nautilus
-        steam
+        # steam
         yt-dlp
         ytarchive
         vlc
@@ -20,6 +20,7 @@
         handbrake
         krita
         inkscape
+        anki-bin
     ])
     ++ (with pkgs-unstable; [
         godot

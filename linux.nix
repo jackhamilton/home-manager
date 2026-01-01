@@ -11,6 +11,10 @@
     "/var/lib/flatpak/exports/share"
   ];
 
+  home.sessionVariables = {
+    ANKI_WAYLAND = 1;
+  };
+
   services.udiskie = {
     enable = true;
     automount = true;

@@ -50,6 +50,8 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.direnv-instant.enable = true;
+
   programs.starship = {
     enable = true;
   };

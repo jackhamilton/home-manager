@@ -29,6 +29,9 @@
     programs.anki = {
         enable = true;
         sync.username = "jmhamilton@protonmail.com";
+        addons = [
+            pkgs.ankiAddons.anki-connect
+        ];
     };
 
     xdg.enable = true;

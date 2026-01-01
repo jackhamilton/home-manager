@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    catppuccin.url = "github:catppuccin/nix/release-25.05";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,9 +12,9 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     agenix.url = "github:ryantm/agenix";
-    # catppuccin.url = "github:catppuccin/nix";
+    direnv-instant.url = "github:Mic92/direnv-instant";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
   outputs =
@@ -26,6 +25,7 @@
       home-manager,
       agenix,
       catppuccin,
+      direnv-instant,
       ...
     }:
     let
@@ -51,13 +51,14 @@
           modules = [
             ./home.nix
             ./git.nix
-              catppuccin.homeModules.catppuccin
+            catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
+            direnv-instant.homeModules.direnv-instant
           ]
           ++ extra-modules;
 
           extraSpecialArgs = {
-            inherit username homeDirectory pkgs-unstable;
+            inherit pkgs-unstable username homeDirectory inputs;
           };
         };
     in

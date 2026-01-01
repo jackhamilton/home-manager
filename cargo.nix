@@ -2,25 +2,21 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 
 let
-rustPlatform = pkgs.makeRustPlatform {
-cargo = pkgs.rust-bin.beta.latest.default;
-rustc = pkgs.rust-bin.beta.latest.default;
-};
-themester = rustPlatform.buildRustPackage rec {
+themester = pkgs.rustPlatform.buildRustPackage  {
     pname = "themester";
-    version = "0.3.1";
+    version = "0.3.3";
 
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton";
       repo = "themester.zsh";
-      rev = "7d0a31b434c9b6bdea9df330a1f117cfb2968ff3";
-      hash = "sha256-dzC7Q9j6eZpaj1+ZPoQ+NzO3eCsM6JxMAup3gKqIQ+I=";
+      rev = "f24fe8d34b6d2271b9c4741403479411840a8158";
+      hash = "sha256-N/0yA+3nNCCGKoktfCoFFEatGZqTdYekkPVAVXSvHV0=";
     };
 
-    cargoHash = "sha256-aY5Zsq2cF48+DoLJog1L5Yu0SXlA+XvvRwtVVUhWeH8=";
+    cargoHash = "sha256-aPxvFwJ2RZVO/usDPlOPfH5RfZi0h5rNhzTpA/Y3m0w=";
   };
 in {
-    # home.packages = [
-    #     themester
-    # ];
+    home.packages = [
+        themester
+    ];
 }

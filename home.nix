@@ -48,9 +48,13 @@ in
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+    config = {
+        global.hide_env_diff = true;
+    };
   };
 
-  programs.direnv-instant.enable = true;
+  # programs.direnv-instant.enable = true;
+  # programs.direnv-instant.enableZshIntegration = true;
 
   programs.starship = {
     enable = true;

@@ -19,6 +19,7 @@
     enable = true;
     ignores = [
       ".direnv/"
+      "node_modules/"
     ];
     attributes = [
       "*.java merge=mergiraf"

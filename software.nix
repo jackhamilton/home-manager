@@ -3,9 +3,14 @@
   pkgs,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }:
 {
+  imports = [
+    inputs.zen-browser.homeModules.beta
+  ];
+
   home.packages =
     (with pkgs; [
       cockatrice

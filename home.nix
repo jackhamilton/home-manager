@@ -42,6 +42,7 @@ in
       starship
       watchexec
       chezmoi
+      bash-language-server
     ];
 
   programs.direnv = {

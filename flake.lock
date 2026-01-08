@@ -233,7 +233,8 @@
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-overlay": {
@@ -289,6 +290,29 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767763594,
+        "narHash": "sha256-5ysv8EuVAgDoYmNuXEUNf7vBzdeRaFxeIlIndv5HMvs=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "8b2302d8c10369c9135552cc892da75cff5ddb03",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

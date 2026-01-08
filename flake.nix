@@ -15,6 +15,15 @@
     agenix.url = "github:ryantm/agenix";
     direnv-instant.url = "github:Mic92/direnv-instant";
     catppuccin.url = "github:catppuccin/nix/release-25.05";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
+        # to have it up-to-date or simply don't specify the nixpkgs input
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs =
@@ -121,6 +130,7 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
+            inputs.zen-browser.homeModules.twilight
           ];
         };
 

@@ -6,6 +6,7 @@
   ...
 }:
 {
+  # currently not working. seems to be a home-manager bug. added export to .zshenv
   xdg.systemDirs.data = [
     "/home/jack/.local/share/flatpak/exports/share"
     "/var/lib/flatpak/exports/share"

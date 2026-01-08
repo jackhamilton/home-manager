@@ -57,7 +57,6 @@
       bazelisk
       bitwarden-menu
       bitwarden-cli
-      flatpak
       cifs-utils
       samba4Full
       cliphist

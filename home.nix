@@ -43,6 +43,7 @@ in
       watchexec
       chezmoi
       bash-language-server
+      pkgs.dwt1-shell-color-scripts
     ];
 
   programs.direnv = {

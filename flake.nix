@@ -78,7 +78,6 @@
           ./git.nix
           ./nixos.nix
           ./linux.nix
-          .q
           /software.nix
           ./services.nix
           ./systemd.nix

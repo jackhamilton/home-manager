@@ -51,8 +51,10 @@ in
     nix-direnv.enable = true;
     config = {
         global.hide_env_diff = true;
+        global.log_filter = "^$";
     };
   };
+  programs.direnv-instant.enable = true;
 
   # programs.direnv-instant.enable = true;
   # programs.direnv-instant.enableZshIntegration = true;

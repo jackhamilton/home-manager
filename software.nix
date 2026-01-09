@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }:
 {
@@ -31,22 +32,7 @@
     ])
     ++ (with pkgs-unstable; [
       godot
-    ])
-    ++ [
-      (pkgs.symlinkJoin {
-        name = "zen-browser";
-        paths = [ inputs.zen-browser.packages.${pkgs.system}.twilight ];
-        buildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/zen \
-            --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
-              pkgs.ffmpeg-full
-              pkgs.mediastreamer
-              pkgs.openh264
-            ]}"
-        '';
-      })
-    ];
+    ]);
 
   programs.anki = {
     enable = true;
@@ -56,7 +42,33 @@
     ];
   };
 
-  programs.zen-browser.enable = true;
+  # Configure zen-browser on Linux with additional codec libraries
+  programs.zen-browser = {
+    enable = true;
+    package = let
+      basePackage = inputs.zen-browser.packages.${pkgs.system}.twilight;
+      wrappedPackage = pkgs.runCommand "zen-twilight-wrapped" {
+        buildInputs = [ pkgs.makeWrapper ];
+        passthru = basePackage.passthru or {};
+      } ''
+        mkdir -p $out
+        cp -r ${basePackage}/* $out/
+        chmod -R +w $out
+
+        # Wrap the zen-twilight script to add extra library paths
+        wrapProgram "$out/bin/zen-twilight" \
+          --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
+            pkgs.ffmpeg-full
+            pkgs.linphonePackages.mediastreamer2
+            pkgs.openh264
+          ]}"
+      '';
+    in wrappedPackage.overrideAttrs (old: {
+      passthru = (old.passthru or {}) // {
+        override = args: wrappedPackage;
+      };
+    });
+  };
 
   xdg.enable = true;
 }

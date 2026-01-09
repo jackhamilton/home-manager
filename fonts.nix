@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-unstable,
+  useColemak,
   lib,
   ...
 }:
@@ -49,7 +50,9 @@ in
       kdePackages.fcitx5-configtool
     ];
 
-      fcitx5.settings.inputMethod = {
+    fcitx5.settings.inputMethod =
+      if useColemak then
+        {
           GroupOrder."0" = "Default";
           "Groups/0" = {
             Name = "Default";
@@ -60,12 +63,25 @@ in
           # keyboard entry (this will use whatever your compositor/system XKB layout is)
           "Groups/0/Items/0".Name = "keyboard-us-colemak_dh";
           "Groups/0/Items/1".Name = "mozc";
-      };
+        }
+      else
+        {
+          GroupOrder."0" = "Default";
+          "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "keyboard-us";
+            DefaultIM = "mozc";
+          };
 
-      fcitx5.settings.addons = {
-        classicui.globalSection = {
-          Theme = "catppuccin-mocha-flamingo";
+          # keyboard entry (this will use whatever your compositor/system XKB layout is)
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/1".Name = "mozc";
         };
+
+    fcitx5.settings.addons = {
+      classicui.globalSection = {
+        Theme = "catppuccin-mocha-flamingo";
       };
+    };
   };
 }

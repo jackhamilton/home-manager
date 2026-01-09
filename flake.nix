@@ -63,6 +63,7 @@
             catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
             direnv-instant.homeModules.direnv-instant
+            inputs.zen-browser.homeModules.twilight
           ]
           ++ extra-modules;
 
@@ -78,6 +79,7 @@
           system = "aarch64-darwin";
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
+          useColemak = true;
           extra-modules = [
             ./expanded-core.nix
             ./fonts.nix
@@ -90,6 +92,7 @@
           system = "x86_64-darwin";
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
+          useColemak = true;
           extra-modules = [
             ./expanded-core.nix
             ./fonts.nix
@@ -102,6 +105,7 @@
           system = "x86_64-linux";
           username = "jack";
           homeDirectory = "/home/jack";
+          useColemak = false;
           extra-modules = [
             ./arch.nix
             ./linux.nix
@@ -115,10 +119,31 @@
           ];
         };
 
-        "nixos" = mkHome {
+        "nixos-laptop" = mkHome {
           system = "x86_64-linux";
           username = "jack";
           homeDirectory = "/home/jack";
+          useColemak = true;
+          extra-modules = [
+            ./nixos.nix
+            ./linux.nix
+            ./software.nix
+            ./services.nix
+            ./systemd.nix
+            ./games.nix
+            ./theme.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
+            inputs.zen-browser.homeModules.twilight
+          ];
+        };
+
+        "nixos-desktop" = mkHome {
+          system = "x86_64-linux";
+          username = "jack";
+          homeDirectory = "/home/jack";
+          useColemak = false;
           extra-modules = [
             ./nixos.nix
             ./linux.nix

@@ -63,7 +63,6 @@
             catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
             direnv-instant.homeModules.direnv-instant
-            inputs.zen-browser.homeModules.twilight
           ]
           ++ extra-modules;
 
@@ -78,7 +77,7 @@
           ./git.nix
           ./nixos.nix
           ./linux.nix
-          /software.nix
+          ./software.nix
           ./services.nix
           ./systemd.nix
           ./games.nix
@@ -161,7 +160,6 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
-            inputs.zen-browser.homeModules.twilight
           ];
         };
 

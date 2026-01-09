@@ -7,10 +7,6 @@
   ...
 }:
 {
-  imports = [
-    inputs.zen-browser.homeModules.twilight
-  ];
-
   home.packages =
     (with pkgs; [
       cockatrice
@@ -36,7 +32,10 @@
     ])
     ++ (with pkgs-unstable; [
       godot
-    ]);
+    ])
+    ++ [
+      inputs.zen-browser.packages.${pkgs.system}.twilight
+    ];
 
   programs.anki = {
     enable = true;
@@ -45,8 +44,6 @@
       pkgs.ankiAddons.anki-connect
     ];
   };
-
-  programs.zen-browser.enable = true;
 
   xdg.enable = true;
 }

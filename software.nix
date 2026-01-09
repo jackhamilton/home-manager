@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }:
 {
@@ -41,7 +42,33 @@
     ];
   };
 
-  programs.zen-browser.enable = true;
+  # Configure zen-browser on Linux with additional codec libraries
+  programs.zen-browser = {
+    enable = true;
+    package = let
+      basePackage = inputs.zen-browser.packages.${pkgs.system}.twilight;
+      wrappedPackage = pkgs.runCommand "zen-twilight-wrapped" {
+        buildInputs = [ pkgs.makeWrapper ];
+        passthru = basePackage.passthru or {};
+      } ''
+        mkdir -p $out
+        cp -r ${basePackage}/* $out/
+        chmod -R +w $out
+
+        # Wrap the zen-twilight script to add extra library paths
+        wrapProgram "$out/bin/zen-twilight" \
+          --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
+            pkgs.ffmpeg-full
+            pkgs.linphonePackages.mediastreamer2
+            pkgs.openh264
+          ]}"
+      '';
+    in wrappedPackage.overrideAttrs (old: {
+      passthru = (old.passthru or {}) // {
+        override = args: wrappedPackage;
+      };
+    });
+  };
 
   xdg.enable = true;
 }

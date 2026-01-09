@@ -44,6 +44,7 @@
           system,
           username,
           homeDirectory,
+          useColemak ? false,
           extra-modules ? [ ],
         }:
         let
@@ -67,7 +68,7 @@
           ++ extra-modules;
 
           extraSpecialArgs = {
-            inherit pkgs-unstable username homeDirectory inputs;
+            inherit pkgs-unstable username homeDirectory inputs useColemak;
           };
         };
     in

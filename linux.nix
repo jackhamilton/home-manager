@@ -88,7 +88,6 @@
       orca
       pamixer
       pavucontrol
-      pipewire
       wireplumber
       protonvpn-gui
       qmk

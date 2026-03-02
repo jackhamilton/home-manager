@@ -103,9 +103,12 @@
           autoSetupRemote = true;
         };
       };
-      merge.mergiraf = {
-        name = "mergiraf";
-        driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+      merge = {
+          conflictStyle = "diff3";
+          mergiraf = {
+              name = "mergiraf";
+              driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+          };
       };
       diff.external = "difft";
       credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";

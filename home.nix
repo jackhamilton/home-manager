@@ -31,6 +31,8 @@ in
       fd
       github-cli
       ripgrep
+      broot
+      skim
       wget
       sd
       xcp

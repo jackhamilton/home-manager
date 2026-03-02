@@ -80,6 +80,7 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
+            ./lsp.nix
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
@@ -123,6 +124,7 @@
           extra-modules = [
             ./nixos.nix
             ./linux.nix
+            ./lsp.nix
             ./software.nix
             ./services.nix
             ./systemd.nix
@@ -143,6 +145,7 @@
           extra-modules = [
             ./nixos.nix
             ./linux.nix
+            ./lsp.nix
             ./software.nix
             ./services.nix
             ./systemd.nix

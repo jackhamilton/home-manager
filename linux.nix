@@ -38,7 +38,6 @@
       gcc
       gnumake
       pkg-config
-      ripgrep
       fd
       nodejs
       tree-sitter

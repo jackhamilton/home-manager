@@ -51,6 +51,11 @@
   home.packages =
     (with pkgs; [
       brightnessctl
+      cargo
+      rustc
+      appimage-run
+      steam-run
+      xclip
       nautilus
       solarc-gtk-theme
       autotiling

@@ -20,4 +20,12 @@
     exec = "flatpak run community.pathofbuilding.PathOfBuilding poe1";
     terminal = false;
   };
+
+
+  xdg.desktopEntries.jagex-launcher = {
+    name = "Jagex Launcher";
+    genericName = "Jagex";
+    exec = "flatpak run com.jagexlauncher.JagexLauncher";
+    terminal = false;
+  };
 }

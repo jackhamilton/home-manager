@@ -48,7 +48,9 @@
           extra-modules ? [ ],
         }:
         let
-          pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+          };
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {

@@ -19,6 +19,38 @@ let
     nativeBuildInputs = [ pkgs.git ];
   };
   mergiraf = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
+
+  # TODO: Remove once jj-vcs/jj#9068 merges and lands in nixpkgs.
+  # Adds `git.ignore-filters` config to fix phantom LFS diffs in `jj status`.
+  # Cleanup: delete this block, change `package = jujutsu-lfs` to `package = pkgs.jujutsu`,
+  # and remove the `git.ignore-filters` setting below (it will be default).
+  jujutsu-lfs = pkgs.rustPlatform.buildRustPackage {
+    pname = "jujutsu-lfs";
+    version = "0.40.0-lfs";
+    src = pkgs.fetchFromGitHub {
+      owner = "kejadlen";
+      repo = "jj";
+      rev = "c08c0fd6de077c65d338a65f9e2848c7d17c68fd";
+      hash = "sha256-47rtJEUqP46iLpPoiDfCKTXfDUBuOhWGBYGGrlwRyxk=";
+    };
+    cargoHash = "sha256-Vf5+yh/uhO3hXcOmogGATC04jJznGNxVQ0yyt75Kjg8=";
+    cargoBuildFlags = [ "--bin" "jj" ];
+    nativeBuildInputs = with pkgs; [ git openssh gnupg installShellFiles pkg-config ];
+    buildInputs = lib.optionals pkgs.stdenv.isDarwin [
+      pkgs.apple-sdk_15
+    ];
+    useNextest = true;
+    LIBSSH2_SYS_USE_PKG_CONFIG = 1;
+    postInstall = ''
+      $out/bin/jj util install-man-pages $out/share/man
+      installShellCompletion --cmd jj \
+        --bash <($out/bin/jj util completion bash) \
+        --zsh <($out/bin/jj util completion zsh) \
+        --fish <($out/bin/jj util completion fish)
+    '';
+    doCheck = false;
+  };
+
   isDarwin = pkgs.stdenv.isDarwin;
   jjEmail = if isDarwin then "jack.hamilton@grindr.com" else "jackham800@gmail.com";
 in
@@ -33,7 +65,7 @@ in
 
   programs.jujutsu = {
     enable = true;
-    package = pkgs.jujutsu;
+    package = jujutsu-lfs;
     settings = {
       user = {
         name = "Jack Hamilton";
@@ -41,6 +73,9 @@ in
       };
       ui = {
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
+      };
+      git = {
+        ignore-filters = [ "lfs" ];
       };
       merge-tools.mergiraf = {
         program = "mergiraf";

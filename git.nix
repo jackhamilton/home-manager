@@ -5,17 +5,49 @@
   pkgs-unstable,
   ...
 }:
+let
+  mergiraf-swift = pkgs.rustPlatform.buildRustPackage {
+    pname = "mergiraf";
+    version = "0.15.0-swift";
+    src = pkgs.fetchFromGitHub {
+      owner = "jackhamilton-grindr";
+      repo = "mergiraf-swift";
+      rev = "abecc9c3c7aa73343e4dab8371bc03b182482cc0";
+      hash = "sha256-a3CN4tdKsJCOosAjXvDN7/8m6kbAUX6E4Bq0d2IMfFk=";
+    };
+    cargoHash = "sha256-xYOnZKSfdVsVlV+lPk0+gXMoZke6sQX3S6DLArQGuxI=";
+    nativeBuildInputs = [ pkgs.git ];
+  };
+  mergiraf = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
+  isDarwin = pkgs.stdenv.isDarwin;
+  jjEmail = if isDarwin then "jack.hamilton@grindr.com" else "jackham800@gmail.com";
+in
 {
   home.packages =
     with pkgs;
     [
-      jujutsu
       lazyjj
       difftastic
-    ]
-    ++ (with pkgs-unstable; [
       mergiraf
-    ]);
+    ];
+
+  programs.jujutsu = {
+    enable = true;
+    package = pkgs.jujutsu;
+    settings = {
+      user = {
+        name = "Jack Hamilton";
+        email = jjEmail;
+      };
+      ui = {
+        diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
+      };
+      merge-tools.mergiraf = {
+        program = "mergiraf";
+        merge-args = [ "merge" "$base" "$left" "$right" "-o" "$output" ];
+      };
+    };
+  };
 
   programs.git = {
     enable = true;

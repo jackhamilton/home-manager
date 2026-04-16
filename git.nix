@@ -9,6 +9,8 @@
   home.packages =
     with pkgs;
     [
+      jujutsu
+      lazyjj
       difftastic
     ]
     ++ (with pkgs-unstable; [

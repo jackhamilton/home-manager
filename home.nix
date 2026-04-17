@@ -50,7 +50,7 @@ in
 
   programs.direnv = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false;
     nix-direnv.enable = true;
     config = {
         global.hide_env_diff = true;
@@ -58,9 +58,6 @@ in
     };
   };
   programs.direnv-instant.enable = true;
-
-  # programs.direnv-instant.enable = true;
-  # programs.direnv-instant.enableZshIntegration = true;
 
   programs.starship = {
     enable = true;

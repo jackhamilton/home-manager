@@ -80,6 +80,7 @@ in
       merge-tools.mergiraf = {
         program = "mergiraf";
         merge-args = [ "merge" "$base" "$left" "$right" "-o" "$output" ];
+        merge-tool-edits-conflict-markers = true;
       };
     };
   };

@@ -25,9 +25,6 @@ in
       pastel
       watchexec
       lua51Packages.luarocks
-      (pkgs.python313.withPackages (ps: [
-        ps.libtmux
-      ]))
       jq
     ]
     ++ lib.optionals isDarwin [

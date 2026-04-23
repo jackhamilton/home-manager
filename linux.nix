@@ -115,6 +115,7 @@
       wl-clipboard
       wtype
       go
+      wiper
     ])
     ++ (with pkgs-unstable; [
       papirus-icon-theme

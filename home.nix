@@ -38,6 +38,9 @@ in
       xcp
       lazygit
       htop
+      (pkgs.python313.withPackages (ps: [
+        ps.libtmux
+      ]))
       tmux
       nixfmt-rfc-style
       neofetch

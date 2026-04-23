@@ -5,15 +5,90 @@
   pkgs-unstable,
   ...
 }:
+let
+  mergiraf-swift = pkgs.rustPlatform.buildRustPackage {
+    pname = "mergiraf";
+    version = "0.15.0-swift";
+    src = pkgs.fetchFromGitHub {
+      owner = "jackhamilton-grindr";
+      repo = "mergiraf-swift";
+      rev = "abecc9c3c7aa73343e4dab8371bc03b182482cc0";
+      hash = "sha256-a3CN4tdKsJCOosAjXvDN7/8m6kbAUX6E4Bq0d2IMfFk=";
+    };
+    cargoHash = "sha256-xYOnZKSfdVsVlV+lPk0+gXMoZke6sQX3S6DLArQGuxI=";
+    nativeBuildInputs = [ pkgs.git ];
+  };
+  mergiraf = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
+
+  # TODO: Remove once jj-vcs/jj#9068 merges and lands in nixpkgs.
+  # Adds `git.ignore-filters` config to fix phantom LFS diffs in `jj status`.
+  # Cleanup: delete this block, change `package = jujutsu-lfs` to `package = pkgs.jujutsu`,
+  # and remove the `git.ignore-filters` setting below (it will be default).
+  jujutsu-lfs = pkgs.rustPlatform.buildRustPackage {
+    pname = "jujutsu-lfs";
+    version = "0.40.0-lfs";
+    src = pkgs.fetchFromGitHub {
+      owner = "kejadlen";
+      repo = "jj";
+      rev = "c08c0fd6de077c65d338a65f9e2848c7d17c68fd";
+      hash = "sha256-47rtJEUqP46iLpPoiDfCKTXfDUBuOhWGBYGGrlwRyxk=";
+    };
+    cargoHash = "sha256-Vf5+yh/uhO3hXcOmogGATC04jJznGNxVQ0yyt75Kjg8=";
+    cargoBuildFlags = [ "--bin" "jj" ];
+    nativeBuildInputs = with pkgs; [ git openssh gnupg installShellFiles pkg-config ];
+    buildInputs = lib.optionals pkgs.stdenv.isDarwin [
+      pkgs.apple-sdk_15
+    ];
+    useNextest = true;
+    LIBSSH2_SYS_USE_PKG_CONFIG = 1;
+    postInstall = ''
+      $out/bin/jj util install-man-pages $out/share/man
+      installShellCompletion --cmd jj \
+        --bash <($out/bin/jj util completion bash) \
+        --zsh <($out/bin/jj util completion zsh) \
+        --fish <($out/bin/jj util completion fish)
+    '';
+    doCheck = false;
+  };
+
+  isDarwin = pkgs.stdenv.isDarwin;
+  jjEmail = if isDarwin then "jack.hamilton@grindr.com" else "jackham800@gmail.com";
+in
 {
   home.packages =
     with pkgs;
     [
+      lazyjj
       difftastic
-    ]
-    ++ (with pkgs-unstable; [
       mergiraf
-    ]);
+      gh-dash
+    ];
+
+  programs.jujutsu = {
+    enable = true;
+    package = jujutsu-lfs;
+    settings = {
+      user = {
+        name = "Jack Hamilton";
+        email = jjEmail;
+      };
+      ui = {
+        diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
+        merge-editor = "ec";
+      };
+      git = {
+        ignore-filters = [ "lfs" ];
+      };
+      merge-tools.mergiraf = {
+        program = "mergiraf";
+        merge-args = [ "merge" "$base" "$left" "$right" "-o" "$output" ];
+        merge-tool-edits-conflict-markers = true;
+      };
+      merge-tools.ec = {
+        merge-args = [ "$base" "$left" "$right" "$output" ];
+      };
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -103,9 +178,12 @@
           autoSetupRemote = true;
         };
       };
-      merge.mergiraf = {
-        name = "mergiraf";
-        driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+      merge = {
+          conflictStyle = "diff3";
+          mergiraf = {
+              name = "mergiraf";
+              driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+          };
       };
       diff.external = "difft";
       credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";

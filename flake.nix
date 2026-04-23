@@ -44,10 +44,13 @@
           system,
           username,
           homeDirectory,
+          useColemak ? false,
           extra-modules ? [ ],
         }:
         let
-          pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+          };
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -67,7 +70,7 @@
           ++ extra-modules;
 
           extraSpecialArgs = {
-            inherit pkgs-unstable username homeDirectory inputs;
+            inherit pkgs-unstable username homeDirectory inputs useColemak;
           };
         };
 
@@ -109,6 +112,7 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
+            ./lsp.nix
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
@@ -145,13 +149,35 @@
           ];
         };
 
-        "nixos" = mkHome {
+        "nixos-laptop" = mkHome {
           system = "x86_64-linux";
           username = "jack";
           homeDirectory = "/home/jack";
           extra-modules = [
             ./nixos.nix
             ./linux.nix
+            ./lsp.nix
+            ./software.nix
+            ./services.nix
+            ./systemd.nix
+            ./games.nix
+            ./theme.nix
+            ./expanded-core.nix
+            ./fonts.nix
+            ./cargo.nix
+            inputs.zen-browser.homeModules.twilight
+            { useColemak = true; }
+          ];
+        };
+
+        "nixos-desktop" = mkHome {
+          system = "x86_64-linux";
+          username = "jack";
+          homeDirectory = "/home/jack";
+          extra-modules = [
+            ./nixos.nix
+            ./linux.nix
+            ./lsp.nix
             ./software.nix
             ./services.nix
             ./systemd.nix

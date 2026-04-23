@@ -31,11 +31,16 @@ in
       fd
       github-cli
       ripgrep
+      broot
+      skim
       wget
       sd
       xcp
       lazygit
       htop
+      (pkgs.python313.withPackages (ps: [
+        ps.libtmux
+      ]))
       tmux
       nixfmt-rfc-style
       neofetch
@@ -48,7 +53,7 @@ in
 
   programs.direnv = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = false;
     nix-direnv.enable = true;
     config = {
         global.hide_env_diff = true;
@@ -56,9 +61,6 @@ in
     };
   };
   programs.direnv-instant.enable = true;
-
-  # programs.direnv-instant.enable = true;
-  # programs.direnv-instant.enableZshIntegration = true;
 
   programs.starship = {
     enable = true;

@@ -38,7 +38,6 @@
       gcc
       gnumake
       pkg-config
-      ripgrep
       fd
       nodejs
       tree-sitter
@@ -52,6 +51,11 @@
   home.packages =
     (with pkgs; [
       brightnessctl
+      cargo
+      rustc
+      appimage-run
+      steam-run
+      xclip
       nautilus
       solarc-gtk-theme
       autotiling
@@ -88,7 +92,6 @@
       orca
       pamixer
       pavucontrol
-      pipewire
       wireplumber
       protonvpn-gui
       qmk
@@ -112,6 +115,7 @@
       wl-clipboard
       wtype
       go
+      wiper
     ])
     ++ (with pkgs-unstable; [
       papirus-icon-theme

@@ -74,6 +74,36 @@ in
       ui = {
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
       };
+      aliases = {
+        tidy = [
+          "util" "exec" "--" "sh" "-c"
+          ''
+            remote=$(jj git remote list 2>/dev/null | head -1 | awk '{print $2}' | sed -n 's|.*github\.com[:/]\(.*\)\.git|\1|p')
+            # Bookmarks whose exact commit is in main
+            merged=$(jj bookmark list -r '::main' -T 'if(!self.remote() && name != "main", name ++ "\n")' 2>/dev/null)
+            # Bookmarks that are locally deleted
+            deleted=$(jj bookmark list -T 'if(!self.remote() && !self.present() && name != "main", name ++ "\n")' 2>/dev/null)
+            # Bookmarks whose PR was squash-merged on GitHub (remote still exists but branch was merged)
+            squashed=""
+            if [ -n "$remote" ]; then
+              for b in $(jj bookmark list -T 'if(!self.remote() && name != "main", name ++ "\n")' 2>/dev/null); do
+                pr_state=$(gh pr list --repo "$remote" --state merged --head "$b" --json number --jq 'length' 2>/dev/null)
+                if [ "$pr_state" != "" ] && [ "$pr_state" -gt 0 ] 2>/dev/null; then
+                  squashed=$(printf '%s\n%s' "$squashed" "$b")
+                fi
+              done
+            fi
+            all=$(printf '%s\n%s\n%s' "$merged" "$deleted" "$squashed" | sort -u | sed '/^$/d')
+            if [ -z "$all" ]; then
+              echo "No stale bookmarks to clean up."
+            else
+              echo "$all" | while read -r b; do
+                jj bookmark forget "$b" 2>&1
+              done
+            fi
+          ''
+        ];
+      };
       git = {
         ignore-filters = [ "lfs" ];
       };

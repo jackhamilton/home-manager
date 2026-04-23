@@ -32,7 +32,10 @@
     ])
     ++ (with pkgs-unstable; [
       godot
-    ]);
+    ])
+    ++ [
+      inputs.zen-browser.packages.${pkgs.system}.twilight
+    ];
 
   programs.anki = {
     enable = true;

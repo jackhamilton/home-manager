@@ -73,9 +73,39 @@
             inherit pkgs-unstable username homeDirectory inputs useColemak;
           };
         };
+
+      nixosModules = {
+        nixos = [
+          ./home.nix
+          ./git.nix
+          ./nixos.nix
+          ./linux.nix
+          ./software.nix
+          ./services.nix
+          ./systemd.nix
+          ./games.nix
+          ./theme.nix
+          ./expanded-core.nix
+          ./fonts.nix
+          ./cargo.nix
+          catppuccin.homeModules.catppuccin
+          agenix.homeManagerModules.default
+          direnv-instant.homeModules.direnv-instant
+        ];
+        server = [
+          ./home.nix
+          ./git.nix
+          ./no-linux.nix
+          catppuccin.homeModules.catppuccin
+          agenix.homeManagerModules.default
+        ];
+      };
     in
     {
-      # Name each target explicitly. Pick names you’ll remember at the CLI.
+      # Export the module lists
+      inherit nixosModules;
+
+      # Name each target explicitly. Pick names you'll remember at the CLI.
       homeConfigurations = {
         "darwin" = mkHome {
           system = "aarch64-darwin";
@@ -156,7 +186,6 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
-            inputs.zen-browser.homeModules.twilight
           ];
         };
 

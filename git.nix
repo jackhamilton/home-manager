@@ -61,6 +61,7 @@ in
       lazyjj
       difftastic
       mergiraf
+      gh-dash
     ];
 
   programs.jujutsu = {
@@ -73,6 +74,7 @@ in
       };
       ui = {
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
+        merge-editor = "ec";
       };
       git = {
         ignore-filters = [ "lfs" ];
@@ -81,6 +83,9 @@ in
         program = "mergiraf";
         merge-args = [ "merge" "$base" "$left" "$right" "-o" "$output" ];
         merge-tool-edits-conflict-markers = true;
+      };
+      merge-tools.ec = {
+        merge-args = [ "$base" "$left" "$right" "$output" ];
       };
     };
   };

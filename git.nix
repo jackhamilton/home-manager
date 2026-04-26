@@ -74,6 +74,10 @@ in
       ui = {
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
       };
+      revset-aliases = {
+        pr = "ancestor(@, main)";
+        "active(rev)" = "(ancestors(rev) | descendants(rev)) ~ immutable()";
+      };
       aliases = {
         tidy = [
           "util" "exec" "--" "sh" "-c"

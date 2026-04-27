@@ -4,16 +4,16 @@
 let
 themester = pkgs.rustPlatform.buildRustPackage  {
     pname = "themester";
-    version = "0.3.3";
+    version = "0.3.4";
 
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton";
       repo = "themester.zsh";
-      rev = "f24fe8d34b6d2271b9c4741403479411840a8158";
-      hash = "sha256-N/0yA+3nNCCGKoktfCoFFEatGZqTdYekkPVAVXSvHV0=";
+      rev = "4245259408bbaa6c16543444c095d4d493a2ea6a";
+      hash = "sha256-P/tI+ZvdKY9EX2FLDjXgFpoCd32r/zeV3GBT6D528Uw=";
     };
 
-    cargoHash = "sha256-aPxvFwJ2RZVO/usDPlOPfH5RfZi0h5rNhzTpA/Y3m0w=";
+    cargoHash = "sha256-bbcdBEHBPErcgq1qIlhofiB19LIYqVeDq+0JrDv71t0=";
   };
 in {
     home.packages = [

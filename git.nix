@@ -75,8 +75,21 @@ in
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
       };
       revset-aliases = {
-        pr = "ancestor(@, main)";
+        pr = "ancestors(@, main)";
         "active(rev)" = "(ancestors(rev) | descendants(rev)) ~ immutable()";
+      };
+      revsets = {
+        log =
+          "@"
+          + " | ancestors(trunk(), 1)"
+          + " | (bookmarks() & mine())"
+          # workspaces with uncommitted changes (parked workspaces stay hidden)
+          + " | (working_copies() & ~empty())"
+          # my unpushed stacks: my commits not on trunk, not under any local or remote bookmark,
+          # and not workspace-tip empties
+          + " | (mine() ~ working_copies() ~ ::trunk() ~ ::bookmarks() ~ ::remote_bookmarks())"
+          # fork points of @ and my bookmarks with trunk so divergence is visible in the graph
+          + " | roots(trunk()..(@ | (bookmarks() & mine())))-";
       };
       aliases = {
         tidy = [
@@ -105,6 +118,7 @@ in
                 jj bookmark forget "$b" 2>&1
               done
             fi
+            jj abandon 'mine() ~ ::(main | bookmarks() | remote_bookmarks() | working_copies())' 2>&1
           ''
         ];
       };

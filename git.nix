@@ -52,7 +52,7 @@ let
   };
 
   isDarwin = pkgs.stdenv.isDarwin;
-  jjEmail = if isDarwin then "jack.hamilton@grindr.com" else "jackham800@gmail.com";
+  jjEmail = if isDarwin then "jhamilton@superfile.com" else "jackham800@gmail.com";
 in
 {
   home.packages =

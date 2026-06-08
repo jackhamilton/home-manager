@@ -40,6 +40,8 @@ in
       htop
       (pkgs.python313.withPackages (ps: [
         ps.libtmux
+        ps.pathlib2
+        ps.pip
       ]))
       tmux
       nixfmt-rfc-style

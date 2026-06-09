@@ -87,6 +87,7 @@
             ./fonts.nix
             ./cargo.nix
             ./no-linux.nix
+            ./darwin.nix
           ];
         };
 
@@ -99,6 +100,7 @@
             ./fonts.nix
             ./cargo.nix
             ./no-linux.nix
+            ./darwin.nix
           ];
         };
 

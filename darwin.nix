@@ -3,6 +3,7 @@
 let
 in {
     home.packages = with pkgs; [
-        aerospace
+        neovim
+        wezterm
     ];
 }

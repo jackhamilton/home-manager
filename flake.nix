@@ -86,7 +86,6 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
-            ./no-linux.nix
             ./darwin.nix
           ];
         };
@@ -99,7 +98,6 @@
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
-            ./no-linux.nix
             ./darwin.nix
           ];
         };
@@ -166,9 +164,6 @@
           system = "x86_64-linux";
           username = "root";
           homeDirectory = "/root/";
-          extra-modules = [
-            ./no-linux.nix
-          ];
         };
       };
     };

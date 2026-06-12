@@ -3,5 +3,6 @@
     home.packages = (with pkgs; [
         nixd
         lua-language-server
+        tree-sitter
     ]);
 }

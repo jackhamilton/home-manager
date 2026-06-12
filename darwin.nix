@@ -3,21 +3,23 @@
 let
   swiftassist-rs = pkgs.rustPlatform.buildRustPackage {
     pname = "sass";
-    version = "0.4.0";
+    version = "0.4.1";
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton";
       repo = "sass-rs";
-      rev = "43f0d4aede5b76afefb20cf9ff6c2e696500b4de";
-      hash = "sha256-QxnZ66FQgjt4XQaQpUQL9HlnLesCpY5P1QTrDzGGyD8=";
+      rev = "d6429acd7bb145abf4e964a7eb208d1c8ba1eb11";
+      hash = "sha256-D8zCjufA/ernGvnj0Bq8EACgns4RELZIwwECGwvLMuI=";
     };
-    cargoHash = "sha256-FJiWGcFcNxROAvZS3UcEUb//WwjAtpq7ByNFuW2u6WE=";
+    cargoHash = "sha256-ECotj/kn+mvNKfxcn/aPreRl2EAWaXiRHG2X+Pig7SQ=";
     nativeBuildInputs = [ pkgs.git ];
   };
 in {
-    home.packages = with pkgs; [
-        neovim
+    home.packages = (with pkgs; [
         wezterm
         swiftlint
         swiftassist-rs
-    ];
+    ])
+    ++ (with pkgs-unstable; [
+        neovim
+    ]);
 }

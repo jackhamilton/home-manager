@@ -130,6 +130,14 @@ in
         merge-args = [ "merge" "$base" "$left" "$right" "-o" "$output" ];
         merge-tool-edits-conflict-markers = true;
       };
+      merge-tools.diffconflicts = {
+        program = "nvim";
+        merge-args = [
+            "-c" "let g:jj_diffconflicts_marker_length=$marker_length"
+            "-c" "JJDiffConflicts!" "$output" "$base" "$left" "$right"
+        ];
+        merge-tool-edits-conflict-markers = true;
+      };
     };
   };
 
@@ -139,6 +147,7 @@ in
     ignores = [
       ".direnv/"
       "node_modules/"
+      ".DS_Store"
     ];
     attributes = [
       "*.java merge=mergiraf"

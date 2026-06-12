@@ -44,7 +44,7 @@ in
       ]))
       tmux
       nixfmt-rfc-style
-      neofetch
+      fastfetch
       starship
       watchexec
       chezmoi

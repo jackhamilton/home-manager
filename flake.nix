@@ -2,19 +2,19 @@
   description = "Home Manager configs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
     direnv-instant.url = "github:Mic92/direnv-instant";
-    catppuccin.url = "github:catppuccin/nix/release-25.05";
+    catppuccin.url = "github:catppuccin/nix/release-26.05";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -87,6 +87,7 @@
             ./fonts.nix
             ./cargo.nix
             ./darwin.nix
+            ./ide.nix
           ];
         };
 

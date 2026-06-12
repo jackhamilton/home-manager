@@ -17,7 +17,6 @@ in
     with pkgs;
     [
       imagemagick
-      pipx
       sccache
       sesh
       grex

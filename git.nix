@@ -8,17 +8,17 @@
 let
   mergiraf-swift = pkgs.rustPlatform.buildRustPackage {
     pname = "mergiraf";
-    version = "0.15.0-swift";
+    version = "0.15.1";
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton-grindr";
       repo = "mergiraf-swift";
-      rev = "abecc9c3c7aa73343e4dab8371bc03b182482cc0";
-      hash = "sha256-a3CN4tdKsJCOosAjXvDN7/8m6kbAUX6E4Bq0d2IMfFk=";
+      rev = "994a7b5ec7e72e97914155b04f3a5c28763cd170";
+      hash = "sha256-9sDO/JKMXRuRKZOO2+jc2q08B1XcICpNyeSIn75G2nM=";
     };
-    cargoHash = "sha256-xYOnZKSfdVsVlV+lPk0+gXMoZke6sQX3S6DLArQGuxI=";
+    cargoHash = "sha256-GapxoJEi3fU+7KZP9isloPgn0s3g8Poy/3/oD1Nx3Ws=";
     nativeBuildInputs = [ pkgs.git ];
   };
-  mergiraf = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
+  mergiraf-local = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
 
   # TODO: Remove once jj-vcs/jj#9068 merges and lands in nixpkgs.
   # Adds `git.ignore-filters` config to fix phantom LFS diffs in `jj status`.
@@ -60,7 +60,7 @@ in
     [
       lazyjj
       difftastic
-      mergiraf
+      mergiraf-local
     ];
 
   programs.jujutsu = {
@@ -79,9 +79,10 @@ in
         "active(rev)" = "(ancestors(rev) | descendants(rev)) ~ immutable()";
       };
       revsets = {
+        # Full connected segment between the current workspace and trunk.
+        # This keeps jj from inserting elided nodes inside the active stack.
         log =
-          "@"
-          + " | ancestors(trunk(), 1)"
+          "connected(@ | trunk() | fork_point(@ | trunk()))"
           + " | (bookmarks() & mine())"
           # workspaces with uncommitted changes (parked workspaces stay hidden)
           + " | (working_copies() & ~empty())"
@@ -219,6 +220,7 @@ in
       "*.cmake merge=mergiraf"
       "*.swift merge=mergiraf"
       "CMakeLists.txt merge=mergiraf"
+      "*.pbxproj merge=mergiraf"
     ];
     settings = {
       user = {

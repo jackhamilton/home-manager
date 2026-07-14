@@ -17,6 +17,7 @@ in {
     home.packages = (with pkgs; [
         wezterm
         swiftlint
+        swiftformat
         swiftassist-rs
     ])
     ++ (with pkgs-unstable; [

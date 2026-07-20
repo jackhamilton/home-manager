@@ -16,9 +16,11 @@ in
   config = {
     home.packages = with pkgs; [
       nerd-fonts.roboto-mono
-      nerd-fonts.arimo
       nerd-fonts.meslo-lg
-      nerd-fonts.jetbrains-mono
+      nerd-fonts.lilex
+      nerd-fonts.geist-mono
+      nerd-fonts.blex-mono
+      nerd-fonts.monaspace
       dejavu_fonts
       kochi-substitute
       ipafont
@@ -28,10 +30,11 @@ in
 
     fonts.fontconfig.defaultFonts = {
       monospace = [
-        "Roboto Sans Mono"
+        "RobotoMono Nerd Font Mono"
         "IPAGothic"
       ];
       sansSerif = [
+        "RobotoMono Nerd Font Propo"
         "DejaVu Sans"
         "IPAPGothic"
       ];

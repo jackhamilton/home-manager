@@ -25,6 +25,7 @@ in
       watchexec
       lua51Packages.luarocks
       jq
+      nodejs
     ]
     ++ lib.optionals isDarwin [
       # MARK: Macos only

@@ -8,14 +8,14 @@
 let
   mergiraf-swift = pkgs.rustPlatform.buildRustPackage {
     pname = "mergiraf";
-    version = "0.15.1";
+    version = "0.15.2";
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton-grindr";
       repo = "mergiraf-swift";
-      rev = "994a7b5ec7e72e97914155b04f3a5c28763cd170";
-      hash = "sha256-9sDO/JKMXRuRKZOO2+jc2q08B1XcICpNyeSIn75G2nM=";
+      rev = "e07628004e625f18ce6c3b8c9493e2b32bb007bd";
+      hash = "sha256-pEr/KZRBDdXMc9dtApYjTT8u/UygE6OS+Ibp6xrAjAI=";
     };
-    cargoHash = "sha256-GapxoJEi3fU+7KZP9isloPgn0s3g8Poy/3/oD1Nx3Ws=";
+    cargoHash = "sha256-J0+ZLLX3Kj3efvloej9/CVUTHbLI/2X7SSGB2KdR/gA=";
     nativeBuildInputs = [ pkgs.git ];
   };
   mergiraf-local = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
@@ -65,7 +65,8 @@ in
 
   programs.jujutsu = {
     enable = true;
-    package = jujutsu-lfs;
+    package = pkgs-unstable.jujutsu;
+    #package = jujutsu-lfs;
     settings = {
       user = {
         name = "Jack Hamilton";
@@ -224,8 +225,8 @@ in
     ];
     settings = {
       user = {
-        name = "jackhamilton";
-        email = "jackham800@gmail.com";
+        name = "Jack Hamilton";
+        email = if isDarwin then "jhamilton@superfile.com" else "jackham800@gmail.com";
       };
       config = {
         push = {

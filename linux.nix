@@ -30,24 +30,6 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-
-    extraPackages = with pkgs; [
-      git
-      gcc
-      gnumake
-      pkg-config
-      fd
-      nodejs
-      tree-sitter
-      lua-language-server
-      rust-analyzer
-      nixd
-      nixfmt-rfc-style
-    ];
-  };
-
   home.packages =
     (with pkgs; [
       brightnessctl

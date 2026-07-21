@@ -19,8 +19,5 @@ in {
         swiftlint
         swiftformat
         swiftassist-rs
-    ])
-    ++ (with pkgs-unstable; [
-        neovim
     ]);
 }

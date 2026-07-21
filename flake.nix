@@ -63,6 +63,7 @@
           modules = [
             ./home.nix
             ./git.nix
+            ./nvim.nix
             catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
             direnv-instant.homeModules.direnv-instant
@@ -82,7 +83,6 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
-            ./lsp.nix
             ./expanded-core.nix
             ./fonts.nix
             ./cargo.nix
@@ -127,7 +127,6 @@
           extra-modules = [
             ./nixos.nix
             ./linux.nix
-            ./lsp.nix
             ./software.nix
             ./services.nix
             ./systemd.nix
@@ -148,7 +147,6 @@
           extra-modules = [
             ./nixos.nix
             ./linux.nix
-            ./lsp.nix
             ./software.nix
             ./services.nix
             ./systemd.nix
@@ -165,6 +163,7 @@
           system = "x86_64-linux";
           username = "root";
           homeDirectory = "/root/";
+          extra-modules = [];
         };
       };
     };

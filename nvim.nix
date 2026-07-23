@@ -6,23 +6,44 @@
   ...
 }:
 let
-  neovim-no-strip = pkgs.neovim-unwrapped.overrideAttrs (old: {
-    dontFixup = true;
+  treesitter-languages = [
+    "rust"
+    "swift"
+    "toml"
+    "yaml"
+  ];
+  selected-treesitter-parsers = lib.getAttrs treesitter-languages pkgs.vimPlugins.nvim-treesitter.parsers;
+  selected-treesitter-queries = lib.getAttrs treesitter-languages pkgs.vimPlugins.nvim-treesitter.queries;
+
+  neovim-unwrapped-base =
+    if pkgs.stdenv.isDarwin then
+      pkgs.neovim-unwrapped.overrideAttrs (_: {
+        dontFixup = true;
+      })
+    else
+      pkgs.neovim-unwrapped;
+  neovim-unwrapped = neovim-unwrapped-base.overrideAttrs (old: {
+    treesitter-parsers =
+      old.treesitter-parsers // lib.mapAttrs (_: parser: parser.origGrammar) selected-treesitter-parsers;
+
+    postInstall = ''
+      ${old.postInstall or ""}
+      mkdir -p "$out/share/nvim/runtime/queries"
+    ''
+    + lib.concatStrings (
+      lib.mapAttrsToList (language: queries: ''
+        ln -s \
+          ${queries}/queries/${language} \
+          "$out/share/nvim/runtime/queries/${language}"
+      '') selected-treesitter-queries
+    );
   });
-  nvim-package = if pkgs.stdenv.isDarwin then neovim-no-strip else pkgs.neovim;
-  nvim-package-with-parsers = nvim-package.overrideAttrs (old: {
-    # the // is a set merge operator
-    treesitter-parsers = old.treesitter-parsers // {
-      rust = pkgs.tree-sitter-grammars.tree-sitter-rust;
-      swift = pkgs.tree-sitter-grammars.tree-sitter-swift;
-      toml = pkgs.tree-sitter-grammars.tree-sitter-toml;
-      yaml = pkgs.tree-sitter-grammars.tree-sitter-yaml;
-    };
-  });
+  nvim-package =
+    if pkgs.stdenv.isDarwin then neovim-unwrapped else pkgs.wrapNeovim neovim-unwrapped { };
 in
 {
   home.packages = with pkgs; [
-    nvim-package-with-parsers
+    nvim-package
     git
     pkg-config
     fd

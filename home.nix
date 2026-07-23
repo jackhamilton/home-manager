@@ -21,12 +21,13 @@ in
   home.packages =
     with pkgs;
     [
-      lsd
+      eza
       bat
       curlie
       zoxide
       cloc
       fzf
+      yazi
       cowsay
       fd
       github-cli

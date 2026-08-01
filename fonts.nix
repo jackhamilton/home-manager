@@ -34,7 +34,7 @@ in
         "IPAGothic"
       ];
       sansSerif = [
-        "RobotoMono Nerd Font Propo"
+        # "RobotoMono Nerd Font Propo"
         "DejaVu Sans"
         "IPAPGothic"
       ];
@@ -42,6 +42,14 @@ in
         "DejaVu Serif"
         "IPAPMincho"
       ];
+    };
+    gtk = {
+
+      enable = true;
+      font = {
+        name = "DejaVu Sans";
+        size = 12;
+      };
     };
 
     i18n.inputMethod = lib.mkIf (!isDarwin) {

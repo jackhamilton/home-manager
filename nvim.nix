@@ -11,6 +11,9 @@ let
     "swift"
     "toml"
     "yaml"
+    "vim"
+    "vimdoc"
+    "markdown"
   ];
   selected-treesitter-parsers = lib.getAttrs treesitter-languages pkgs.vimPlugins.nvim-treesitter.parsers;
   selected-treesitter-queries = lib.getAttrs treesitter-languages pkgs.vimPlugins.nvim-treesitter.queries;

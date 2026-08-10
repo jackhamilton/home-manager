@@ -241,6 +241,9 @@ in
           };
       };
       diff.external = "difft";
+      # Clear the system keychain helper so GitHub HTTPS requests use the
+      # account selected by `gh auth switch`.
+      credential.helper = "";
       credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
       credential."https://gist.github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
     };

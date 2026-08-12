@@ -7,8 +7,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton";
       repo = "sass-rs";
-      rev = "d6429acd7bb145abf4e964a7eb208d1c8ba1eb11";
-      hash = "sha256-D8zCjufA/ernGvnj0Bq8EACgns4RELZIwwECGwvLMuI=";
+      rev = "be2dadd";
+      hash = "sha256-mbkFa3HAzQXAP2j51A9NtWQKvJ22JocHPqzK+05gfWI=";
     };
     cargoHash = "sha256-ECotj/kn+mvNKfxcn/aPreRl2EAWaXiRHG2X+Pig7SQ=";
     nativeBuildInputs = [ pkgs.git ];

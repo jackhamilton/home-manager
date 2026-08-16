@@ -9,8 +9,25 @@
 {
   home.packages = with pkgs; [
     numix-icon-theme-circle
-    # catppuccin-qt5ct
+    catppuccin-kde
+    libsForQt5.qtstyleplugin-kvantum # Qt5 plugin
+    qt6Packages.qtstyleplugin-kvantum # Qt6 plugin
+    qt6Packages.qt6ct
+    #catppuccin-qt5ct
     # catppuccin-gtk
+    (pkgs.writeShellScriptBin "kdeconnect-app" ''
+      unset QT_STYLE_OVERRIDE
+      unset QT_QPA_PLATFORMTHEME
+      export QT_QUICK_CONTROLS_STYLE=Fusion
+      exec ${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-app "$@"
+    '')
+
+    (pkgs.writeShellScriptBin "kdeconnect-sms" ''
+      unset QT_STYLE_OVERRIDE
+      unset QT_QPA_PLATFORMTHEME
+      export QT_QUICK_CONTROLS_STYLE=Fusion
+      exec ${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-sms "$@"
+    '')
   ];
 
   dconf.settings = {
@@ -43,7 +60,7 @@
   qt = {
     enable = true;
     style.name = "kvantum";
-    platformTheme.name = "kvantum";
+    platformTheme.name = "qt6ct";
   };
 
 }

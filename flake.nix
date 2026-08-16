@@ -24,6 +24,10 @@
         home-manager.follows = "home-manager";
       };
     };
+    jagex-launcher = {
+      url = "github:kurtmorris/jagex-launcher-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -157,6 +161,7 @@
             ./fonts.nix
             ./cargo.nix
             inputs.zen-browser.homeModules.twilight
+            inputs.jagex-launcher.nixosModules.default
           ];
         };
 

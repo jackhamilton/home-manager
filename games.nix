@@ -1,11 +1,19 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
 {
-    home.packages = (with pkgs; [
-        runelite
-        lutris
-        piper
+  config,
+  pkgs,
+  pkgs-unstable,
+  lib,
+  ...
+}:
+{
+  home.packages =
+    (with pkgs; [
+      jagex-launcher
+      runelite
+      lutris
+      piper
     ])
-    ++ (with pkgs-unstable; []);
+    ++ (with pkgs-unstable; [ ]);
 
   xdg.desktopEntries.awakened-poe-trade = {
     name = "Awakened POE Trade";
@@ -21,11 +29,10 @@
     terminal = false;
   };
 
-
-  xdg.desktopEntries.jagex-launcher = {
-    name = "Jagex Launcher";
-    genericName = "Jagex";
-    exec = "flatpak run com.jagexlauncher.JagexLauncher";
-    terminal = false;
-  };
+  # xdg.desktopEntries.jagex-launcher = {
+  #   name = "Jagex Launcher";
+  #   genericName = "Jagex";
+  #   exec = "flatpak run com.jagexlauncher.JagexLauncher";
+  #   terminal = false;
+  # };
 }

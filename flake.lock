@@ -99,6 +99,26 @@
         "type": "github"
       }
     },
+    "jagex-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794108784,
+        "narHash": "sha256-FWx6yGiekQ6spx/ZyDANTjc/XJvX1eeEglZinRSgWBs=",
+        "owner": "kurtmorris",
+        "repo": "jagex-launcher-flake",
+        "rev": "18fc49641b109b7e6fdb66ce2d7ea489fe0d3575",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kurtmorris",
+        "repo": "jagex-launcher-flake",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1790340521,
@@ -182,6 +202,7 @@
         "catppuccin": "catppuccin",
         "direnv-instant": "direnv-instant",
         "home-manager": "home-manager",
+        "jagex-launcher": "jagex-launcher",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "rust-overlay": "rust-overlay",

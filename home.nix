@@ -41,6 +41,7 @@ in
       htop
       (pkgs.python313.withPackages (ps: [
         ps.libtmux
+        ps.hidapi
         ps.pip
       ]))
       pkgs-unstable.tmux
@@ -83,5 +84,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     ISNIXSHELL = "yes";
+    # attempted copypaste fix
+    NIXOS_OZONE_WL = "1";
   };
 }

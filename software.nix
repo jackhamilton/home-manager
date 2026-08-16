@@ -6,7 +6,33 @@
   inputs,
   ...
 }:
-{
+let
+  basePackage = inputs.zen-browser.packages.${pkgs.system}.twilight;
+
+  zenTwilight = let
+    wrapped = pkgs.runCommand "zen-twilight-wrapped" {
+      buildInputs = [ pkgs.makeWrapper ];
+      passthru = basePackage.passthru or { };
+    } ''
+      mkdir -p $out
+      cp -r ${basePackage}/* $out/
+      chmod -R +w $out
+      wrapProgram "$out/bin/zen-twilight" \
+        --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
+          pkgs.ffmpeg-full
+          pkgs.linphonePackages.mediastreamer2
+          pkgs.openh264
+        ]}"
+    '';
+  in wrapped.overrideAttrs (old: {
+    passthru = (old.passthru or { }) // {
+      override = args: zenTwilight;
+    };
+  });
+in {
+  # discord
+  nixpkgs.config.allowUnfree = true;
+
   home.packages =
     (with pkgs; [
       cockatrice
@@ -23,8 +49,7 @@
       thunderbird
       audacity
       libreoffice
-      vesktop
-      ripcord
+      discord
       handbrake
       krita
       inkscape
@@ -45,29 +70,12 @@
   # Configure zen-browser on Linux with additional codec libraries
   programs.zen-browser = {
     enable = true;
-    package = let
-      basePackage = inputs.zen-browser.packages.${pkgs.system}.twilight;
-      wrappedPackage = pkgs.runCommand "zen-twilight-wrapped" {
-        buildInputs = [ pkgs.makeWrapper ];
-        passthru = basePackage.passthru or {};
-      } ''
-        mkdir -p $out
-        cp -r ${basePackage}/* $out/
-        chmod -R +w $out
+    setAsDefaultBrowser = true;
+    package = zenTwilight;
+  };
 
-        # Wrap the zen-twilight script to add extra library paths
-        wrapProgram "$out/bin/zen-twilight" \
-          --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
-            pkgs.ffmpeg-full
-            pkgs.linphonePackages.mediastreamer2
-            pkgs.openh264
-          ]}"
-      '';
-    in wrappedPackage.overrideAttrs (old: {
-      passthru = (old.passthru or {}) // {
-        override = args: wrappedPackage;
-      };
-    });
+  home.sessionVariables = {
+    DEFAULT_BROWSER = "${zenTwilight}/bin/zen-twilight";
   };
 
   xdg.enable = true;

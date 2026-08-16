@@ -4,5 +4,6 @@ let
 in {
     home.packages = with pkgs; [
         ckb-next
+        libratbag
     ];
 }

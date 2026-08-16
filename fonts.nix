@@ -34,8 +34,8 @@ in
         "IPAGothic"
       ];
       sansSerif = [
-        # "RobotoMono Nerd Font Propo"
         "DejaVu Sans"
+        "RobotoMono Nerd Font Propo"
         "IPAPGothic"
       ];
       serif = [

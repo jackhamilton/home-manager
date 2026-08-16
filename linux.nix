@@ -34,7 +34,7 @@
     (with pkgs; [
       brightnessctl
       cargo
-      rustc
+      pkgs-unstable.rustc
       appimage-run
       steam-run
       xclip

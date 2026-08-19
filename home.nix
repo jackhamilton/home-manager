@@ -44,7 +44,7 @@ in
         ps.pip
       ]))
       tmux
-      nixfmt-rfc-style
+      nixfmt
       fastfetch
       starship
       watchexec

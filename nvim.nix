@@ -53,7 +53,7 @@ in
     tree-sitter
     rust-analyzer
     nixd
-    nixfmt-rfc-style
+    nixfmt
     lua-language-server
   ];
 }

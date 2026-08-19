@@ -12,10 +12,10 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "jackhamilton-grindr";
       repo = "mergiraf-swift";
-      rev = "e07628004e625f18ce6c3b8c9493e2b32bb007bd";
-      hash = "sha256-pEr/KZRBDdXMc9dtApYjTT8u/UygE6OS+Ibp6xrAjAI=";
+      rev = "8b4fbf252b18fb249f1e378b049385130a9f1fce";
+      hash = "sha256-wpfynuZn5Cd5rgGGNZZhOHzCbD3tdVo5HTE+hDemFi0=";
     };
-    cargoHash = "sha256-J0+ZLLX3Kj3efvloej9/CVUTHbLI/2X7SSGB2KdR/gA=";
+    cargoHash = "sha256-O/B0rA8DkGoM8eMnnZIMOHj79v3SmqPKNAgPSIhZLpA=";
     nativeBuildInputs = [ pkgs.git ];
   };
   mergiraf-local = if pkgs.stdenv.isDarwin then mergiraf-swift else pkgs-unstable.mergiraf;
@@ -52,28 +52,53 @@ let
   };
 
   isDarwin = pkgs.stdenv.isDarwin;
-  jjEmail = if isDarwin then "jhamilton@superfile.com" else "jackham800@gmail.com";
+  jjEmail = "jackham800@gmail.com";
+  jujutsuWithGitHubIdentity = pkgs.writeShellScriptBin "jj" ''
+    config_args=()
+    gh_hosts_file="''${GH_CONFIG_DIR:-''${XDG_CONFIG_HOME:-${config.home.homeDirectory}/.config}/gh}/hosts.yml"
+    github_login="$(${pkgs.gawk}/bin/awk '
+      /^github.com:/ { in_github = 1; next }
+      in_github && /^[^[:space:]]/ { exit }
+      in_github && /^[[:space:]]{4}user:/ { print $2; exit }
+    ' "$gh_hosts_file" 2>/dev/null)"
+
+    case "$github_login" in
+      jhamilton|jhamilton-superfile)
+        config_args+=(--config "user.name=jhamilton")
+        config_args+=(--config "user.email=jhamilton@superfile.com")
+        ;;
+      jackhamilton)
+        config_args+=(--config "user.name=jackhamilton")
+        config_args+=(--config "user.email=jackham800@gmail.com")
+        ;;
+    esac
+
+    exec ${pkgs-unstable.jujutsu}/bin/jj "''${config_args[@]}" "$@"
+  '';
 in
 {
   home.packages =
     with pkgs;
     [
       lazyjj
+      jj-fzf
       difftastic
       mergiraf-local
     ];
 
   programs.jujutsu = {
     enable = true;
-    package = pkgs-unstable.jujutsu;
+    package = jujutsuWithGitHubIdentity;
     #package = jujutsu-lfs;
     settings = {
       user = {
-        name = "Jack Hamilton";
+        name = "jackhamilton";
         email = jjEmail;
       };
       ui = {
         diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
+        diff-editor = [ "nvim" "-c" "DiffEditor $left $right $output" ];
+        merge-editor = "diffconflicts";
       };
       revset-aliases = {
         pr = "ancestors(@, main)";
@@ -246,6 +271,16 @@ in
       credential.helper = "";
       credential."https://github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
       credential."https://gist.github.com".helper = "!${pkgs.github-cli}/bin/gh auth git-credential";
+    };
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks."github.com" = {
+      hostname = "github.com";
+      user = "git";
+      identityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+      identitiesOnly = true;
     };
   };
 }

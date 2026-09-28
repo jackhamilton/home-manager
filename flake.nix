@@ -146,6 +146,7 @@
           homeDirectory = "/home/jack";
           extra-modules = [
             ./nixos.nix
+            ./kdeconnect.nix
             ./linux.nix
             ./software.nix
             ./services.nix

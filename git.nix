@@ -168,6 +168,10 @@ in
     };
   };
 
+  home.sessionVariables = lib.mkIf pkgs.stdenv.isDarwin {
+    JJ_CONFIG = "${config.home.homeDirectory}/Library/Application Support/jj/config.toml";
+  };
+
   programs.git = {
     enable = true;
     lfs.enable = true;

@@ -29,6 +29,5 @@ in
     ]
     ++ lib.optionals isDarwin [
       # MARK: Macos only
-      xcbeautify
     ];
 }

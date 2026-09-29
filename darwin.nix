@@ -27,8 +27,11 @@ in {
 
     home.packages = (with pkgs; [
         wezterm
+        swiftassist-rs
+    ]) ++ (with pkgs-unstable; [
+        swift
         swiftlint
         swiftformat
-        swiftassist-rs
+        xcbeautify
     ]);
 }

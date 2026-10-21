@@ -43,7 +43,7 @@ in
         ps.libtmux
         ps.pip
       ]))
-      tmux
+      pkgs-unstable.tmux
       nixfmt
       fastfetch
       starship
@@ -56,6 +56,7 @@ in
   programs.direnv = {
     enable = true;
     enableZshIntegration = false;
+    enableFishIntegration = false;
     nix-direnv.enable = true;
     config = {
         global.hide_env_diff = true;
@@ -66,6 +67,15 @@ in
 
   programs.starship = {
     enable = true;
+  };
+
+  programs.zellij = {
+    enable = true;
+    settings = {
+      theme = "catppuccin-mocha";
+      default_shell = "${pkgs.fish}/bin/fish";
+      env.fish_trace = "";
+    };
   };
 
   programs.home-manager.enable = true;

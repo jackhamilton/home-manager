@@ -25,6 +25,7 @@ in
       watchexec
       lua51Packages.luarocks
       jq
+      fish
       nodejs
     ]
     ++ lib.optionals isDarwin [

@@ -18,11 +18,11 @@ in {
         Include ${config.home.homeDirectory}/.config/colima/ssh_config
     '';
 
-    programs.ssh.matchBlocks."github-superfile" = {
-        hostname = "github.com";
-        user = "git";
-        identityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519_superfile" ];
-        identitiesOnly = true;
+    programs.ssh.settings."github-superfile" = {
+        HostName = "github.com";
+        User = "git";
+        IdentityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519_superfile" ];
+        IdentitiesOnly = true;
     };
 
     home.packages = (with pkgs; [

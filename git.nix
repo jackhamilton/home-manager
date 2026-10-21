@@ -54,6 +54,67 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   jjEmail = "jackham800@gmail.com";
   jujutsuWithGitHubIdentity = pkgs.writeShellScriptBin "jj" ''
+    args=("$@")
+    is_git_push=false
+    for ((index = 0; index + 1 < ''${#args[@]}; index++)); do
+      if [[ "''${args[index]}" == git && "''${args[index + 1]}" == push ]]; then
+        is_git_push=true
+        break
+      fi
+    done
+
+    if [[ "$is_git_push" == true && ! " ''${args[*]} " =~ [[:space:]]--help[[:space:]] ]]; then
+      repo_path="$PWD"
+      remote=""
+      for ((index = 0; index < ''${#args[@]}; index++)); do
+        case "''${args[index]}" in
+          -R|--repository)
+            ((index += 1))
+            repo_path="''${args[index]}"
+            ;;
+          --repository=*)
+            repo_path="''${args[index]#*=}"
+            ;;
+          --remote)
+            ((index += 1))
+            remote="''${args[index]}"
+            ;;
+          --remote=*)
+            remote="''${args[index]#*=}"
+            ;;
+        esac
+      done
+
+      repo_root="$(${pkgs.git}/bin/git -C "$repo_path" rev-parse --show-toplevel 2>/dev/null)" || repo_root=""
+      if [[ -n "$repo_root" ]]; then
+        if [[ -z "$remote" ]]; then
+          remote="$("${pkgs-unstable.jujutsu}/bin/jj" config get git.push 2>/dev/null || true)"
+          if ! "${pkgs.git}/bin/git" -C "$repo_root" remote get-url "$remote" >/dev/null 2>&1; then
+            remote=""
+          fi
+        fi
+        if [[ -z "$remote" ]]; then
+          if "${pkgs.git}/bin/git" -C "$repo_root" remote get-url origin >/dev/null 2>&1; then
+            remote=origin
+          else
+            remote="$("${pkgs.git}/bin/git" -C "$repo_root" remote | head -n 1)"
+          fi
+        fi
+        remote_url="$("${pkgs.git}/bin/git" -C "$repo_root" remote get-url "$remote" 2>/dev/null || true)"
+
+        for hook_name in pre-commit pre-push; do
+          hook_path="$("${pkgs.git}/bin/git" -C "$repo_root" rev-parse --path-format=absolute --git-path "hooks/$hook_name")"
+          if [[ -x "$hook_path" ]]; then
+            if [[ "$hook_name" == pre-push ]]; then
+              (cd "$repo_root" && "$hook_path" "$remote" "$remote_url" </dev/null) || exit $?
+            else
+              (cd "$repo_root" && "$hook_path") || exit $?
+            fi
+          fi
+        done
+      fi
+    fi
+
     config_args=()
     gh_hosts_file="''${GH_CONFIG_DIR:-''${XDG_CONFIG_HOME:-${config.home.homeDirectory}/.config}/gh}/hosts.yml"
     github_login="$(${pkgs.gawk}/bin/awk '
@@ -119,6 +180,55 @@ in
           + " | roots(trunk()..(@ | (bookmarks() & mine())))-";
       };
       aliases = {
+        move-unpushed = [
+          "util" "exec" "--" "sh" "-c"
+          ''
+            current_bookmarks=$(jj bookmark list -r @ -T 'if(!self.remote(), name ++ "\n")')
+            parent_bookmarks=$(jj bookmark list -r @- -T 'if(!self.remote(), name ++ "\n")')
+            count_bookmarks() {
+              printf '%s\n' "$1" | sed '/^$/d' | wc -l | tr -d ' '
+            }
+
+            current_count=$(count_bookmarks "$current_bookmarks")
+            parent_count=$(count_bookmarks "$parent_bookmarks")
+            if [ "$current_count" -eq 1 ]; then
+              bookmark=$current_bookmarks
+              create_child=true
+            elif [ "$current_count" -gt 1 ]; then
+              echo "Expected at most one local bookmark on @; found $current_count." >&2
+              exit 1
+            elif [ "$parent_count" -eq 1 ]; then
+              bookmark=$parent_bookmarks
+              create_child=false
+            else
+              echo "Expected one local bookmark on @ or @-; found $parent_count on @-." >&2
+              echo "Move the changes manually with: jj restore --from <bookmark>@<remote> --into @- --restore-descendants" >&2
+              exit 1
+            fi
+
+            remote_bookmark=""
+            for remote in $(jj git remote list | awk '{print $1}'); do
+              if jj log -r "$bookmark@$remote" -T 'change_id' >/dev/null 2>&1; then
+                if [ -n "$remote_bookmark" ]; then
+                  echo "More than one remote bookmark matches $bookmark; specify one manually." >&2
+                  exit 1
+                fi
+                remote_bookmark="$bookmark@$remote"
+              fi
+            done
+
+            if [ -z "$remote_bookmark" ]; then
+              echo "No tracked remote bookmark found for $bookmark." >&2
+              exit 1
+            fi
+
+            printf 'Moving the difference from %s into the working-copy change.\n' "$remote_bookmark"
+            if [ "$create_child" = true ]; then
+              jj new || exit $?
+            fi
+            jj restore --from "$remote_bookmark" --into @- --restore-descendants
+          ''
+        ];
         tidy = [
           "util" "exec" "--" "sh" "-c"
           ''
@@ -280,11 +390,26 @@ in
 
   programs.ssh = {
     enable = true;
-    matchBlocks."github.com" = {
-      hostname = "github.com";
-      user = "git";
-      identityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
-      identitiesOnly = true;
+    enableDefaultConfig = false;
+    settings = {
+      "*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
+      };
+      "github.com" = {
+        HostName = "github.com";
+        User = "git";
+        IdentityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+        IdentitiesOnly = true;
+      };
     };
   };
 }

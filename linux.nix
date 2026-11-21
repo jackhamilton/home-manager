@@ -33,7 +33,7 @@
   home.packages =
     (with pkgs; [
       brightnessctl
-      cargo
+      dua
       pkgs-unstable.rustc
       appimage-run
       steam-run

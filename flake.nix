@@ -161,7 +161,6 @@
             ./fonts.nix
             ./cargo.nix
             inputs.zen-browser.homeModules.twilight
-            inputs.jagex-launcher.nixosModules.default
           ];
         };
 

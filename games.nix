@@ -3,16 +3,17 @@
   pkgs,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }:
 {
   home.packages =
     (with pkgs; [
-      jagex-launcher
       runelite
       lutris
       piper
     ])
+    ++ [ inputs.jagex-launcher.packages.${pkgs.system}.default ]
     ++ (with pkgs-unstable; [ ]);
 
   xdg.desktopEntries.awakened-poe-trade = {

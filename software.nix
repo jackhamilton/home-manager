@@ -20,7 +20,7 @@ let
       wrapProgram "$out/bin/zen-twilight" \
         --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
           pkgs.ffmpeg-full
-          pkgs.linphonePackages.mediastreamer2
+          # pkgs.linphonePackages.mediastreamer2
           pkgs.openh264
         ]}"
     '';

@@ -6,18 +6,23 @@
   inputs,
   ...
 }:
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
+in
 {
   home.packages =
     (with pkgs; [
-      vlc
-      nautilus
-      calibre
-      thunderbird
       libreoffice
       discord
-      mpv
     ])
-    ++ (with pkgs-unstable; [ ]);
+    ++ (with pkgs-unstable; [ ])
+    ++ (if !isDarwin then (with pkgs; [
+      vlc
+      mpv
+      nautilus
+      thunderbird
+      calibre
+    ]) else [] );
 
   programs.anki = {
     enable = true;

@@ -36,13 +36,13 @@ let
         override = args: zenTwilight;
       };
     });
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin or pkgs.stdenv.isDarwin;
 in
 {
   home.packages =
-    (with pkgs; [
-      chromium
-    ])
-    ++ (with pkgs-unstable; [ ]);
+    (with pkgs; [])
+    ++ (with pkgs-unstable; [ ])
+    ++ (if !isDarwin then [ pkgs.chromium ] else [] );
 
   programs.librewolf = {
     enable = true;

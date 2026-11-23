@@ -44,7 +44,6 @@
     let
       pc-modules = [
         ./host-specific/pc-core-terminal.nix
-        ./software/pc-core-software.nix
         ./software/browser.nix
         ./software/cargo-packages.nix
         ./theme/fonts.nix
@@ -54,6 +53,7 @@
       linux-pc-modules = [
         ./host-specific/linux.nix
         ./host-specific/systemd.nix
+        ./software/pc-core-software.nix
         ./theme/linux-theme.nix
         ./drivers.nix
         ./audio.nix

@@ -4,5 +4,5 @@
     services.easyeffects.enable = true;
 
     # required by easyeffects
-    programs.dconf.enable = true;
+    dconf.enable = true;
 }

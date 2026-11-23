@@ -14,6 +14,20 @@ let
     nativeBuildInputs = [ pkgs.git ];
   };
 in {
+    age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+
+    age.secrets.ssh-client-key = {
+        file = ./secrets/ssh-client-darwin.age;
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519_nixos";
+        mode = "0400";
+        symlink = false;
+    };
+
+    programs.ssh.settings."*" = {
+        IdentityFile = [ "${config.home.homeDirectory}/.ssh/id_ed25519_nixos" ];
+        IdentitiesOnly = true;
+    };
+
     programs.ssh.extraConfig = ''
         Include ${config.home.homeDirectory}/.config/colima/ssh_config
     '';

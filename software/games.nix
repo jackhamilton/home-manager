@@ -9,7 +9,7 @@
 {
   home.packages =
     (with pkgs; [
-      runelite
+      cockatrice
       lutris
       piper
     ])

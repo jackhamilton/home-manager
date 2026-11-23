@@ -6,6 +6,8 @@
   ...
 }:
 {
+  xdg.enable = true;
+
   # currently not working. seems to be a home-manager bug. added export to .zshenv
   xdg.systemDirs.data = [
     "/home/jack/.local/share/flatpak/exports/share"
@@ -32,11 +34,9 @@
 
   home.packages =
     (with pkgs; [
+      pkgs.kdePackages.kdeconnect-kde
       brightnessctl
       dua
-      pkgs-unstable.rustc
-      appimage-run
-      steam-run
       xclip
       nautilus
       solarc-gtk-theme

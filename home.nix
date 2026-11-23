@@ -22,6 +22,7 @@ in
     with pkgs;
     [
       eza
+      sccache
       bat
       curlie
       zoxide
@@ -39,15 +40,15 @@ in
       xcp
       lazygit
       htop
-      (pkgs.python313.withPackages (ps: [
-        ps.libtmux
-        ps.hidapi
-        ps.pip
-      ]))
-      pkgs-unstable.tmux
+      #(pkgs.python313.withPackages (ps: [
+      #  ps.libtmux
+      #  ps.hidapi
+      #  ps.pip
+      #]))
+      #pkgs-unstable.tmux
+      zellij
       nixfmt
       fastfetch
-      starship
       watchexec
       chezmoi
       bash-language-server

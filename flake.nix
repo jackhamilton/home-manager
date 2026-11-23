@@ -42,6 +42,23 @@
       ...
     }:
     let
+      pc-modules = [
+        ./host-specific/pc-core-terminal.nix
+        ./software/pc-core-software.nix
+        ./software/browser.nix
+        ./software/cargo-packages.nix
+        ./theme/fonts.nix
+        ./repos.nix
+        inputs.zen-browser.homeModules.twilight
+      ];
+      linux-pc-modules = [
+        ./host-specific/linux.nix
+        ./host-specific/systemd.nix
+        ./theme/linux-theme.nix
+        ./drivers.nix
+        ./audio.nix
+      ];
+
       # small helper to build a Home Manager config for a given system/identity
       mkHome =
         {
@@ -66,8 +83,8 @@
           # your base module(s) + host-specific tweaks
           modules = [
             ./home.nix
-            ./git.nix
-            ./nvim.nix
+            ./software/version-control.nix
+            ./software/nvim.nix
             catppuccin.homeModules.catppuccin
             agenix.homeManagerModules.default
             direnv-instant.homeModules.direnv-instant
@@ -75,7 +92,13 @@
           ++ extra-modules;
 
           extraSpecialArgs = {
-            inherit pkgs-unstable username homeDirectory inputs useColemak;
+            inherit
+              pkgs-unstable
+              username
+              homeDirectory
+              inputs
+              useColemak
+              ;
           };
         };
     in
@@ -87,12 +110,10 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
-            ./expanded-core.nix
-            ./fonts.nix
-            ./cargo.nix
-            ./darwin.nix
-            ./ide.nix
-          ];
+            ./software/development.nix
+            ./host-specific/darwin.nix
+          ]
+          ++ pc-modules;
         };
 
         "darwin-intel" = mkHome {
@@ -100,11 +121,8 @@
           username = "jackhamilton";
           homeDirectory = "/Users/jackhamilton";
           extra-modules = [
-            ./expanded-core.nix
-            ./fonts.nix
-            ./cargo.nix
-            ./darwin.nix
-          ];
+            ./host-specific/darwin.nix
+          ] ++ pc-modules;
         };
 
         "arch" = mkHome {
@@ -112,16 +130,9 @@
           username = "jack";
           homeDirectory = "/home/jack";
           extra-modules = [
-            ./arch.nix
-            ./linux.nix
-            ./software.nix
-            ./repos.nix
-            ./systemd.nix
-            ./theme.nix
-            ./expanded-core.nix
-            ./fonts.nix
-            ./cargo.nix
-          ];
+            ./host-specific/arch.nix
+          ]
+          ++ pc-modules ++ linux-pc-modules;
         };
 
         "nixos-laptop" = mkHome {
@@ -129,19 +140,12 @@
           username = "jack";
           homeDirectory = "/home/jack";
           extra-modules = [
-            ./nixos.nix
-            ./linux.nix
-            ./software.nix
-            ./services.nix
-            ./systemd.nix
-            ./games.nix
-            ./theme.nix
-            ./expanded-core.nix
-            ./fonts.nix
-            ./cargo.nix
-            inputs.zen-browser.homeModules.twilight
+            ./software/games.nix
+            ./software/development.nix
+            ./software/hacking.nix
             { useColemak = true; }
-          ];
+          ]
+          ++ pc-modules ++ linux-pc-modules;
         };
 
         "nixos-desktop" = mkHome {
@@ -149,26 +153,19 @@
           username = "jack";
           homeDirectory = "/home/jack";
           extra-modules = [
-            ./nixos.nix
-            ./kdeconnect.nix
-            ./linux.nix
-            ./software.nix
-            ./services.nix
-            ./systemd.nix
-            ./games.nix
-            ./theme.nix
-            ./expanded-core.nix
-            ./fonts.nix
-            ./cargo.nix
-            inputs.zen-browser.homeModules.twilight
-          ];
+            ./software/games.nix
+            ./software/development.nix
+            ./software/hacking.nix
+            ./software/media-editing.nix
+          ]
+          ++ pc-modules ++ linux-pc-modules;
         };
 
         "server" = mkHome {
           system = "x86_64-linux";
           username = "root";
           homeDirectory = "/root/";
-          extra-modules = [];
+          extra-modules = [ ];
         };
       };
     };

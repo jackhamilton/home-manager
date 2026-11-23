@@ -17,7 +17,6 @@ in
     with pkgs;
     [
       imagemagick
-      sccache
       sesh
       grex
       hyperfine
@@ -25,8 +24,9 @@ in
       watchexec
       lua51Packages.luarocks
       jq
-      fish
       nodejs
+      yt-dlp
+      ytarchive
     ]
     ++ lib.optionals isDarwin [
       # MARK: Macos only
